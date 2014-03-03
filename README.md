@@ -17,7 +17,7 @@ jsfmt [flags] [path ...]
   -d=false: display diffs instead of rewriting files
   -l=false: list files whose formatting differs from jsfmt's
   -r="": rewrite rule (see below)
-  -f="": find rule (same as pattern, below)
+  -f="": find rule (same as replace "pattern"; see below)
   -tabs=false: indent with tabs
   -tabwidth=2: tab width
   -w=false: write result to (source) file instead of stdout
