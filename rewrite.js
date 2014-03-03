@@ -232,8 +232,8 @@ exports.rewriteJavascript = function(js, rewriteRule) {
   var pattern = unwrapRewriteNode(esprima.parse(rewriteRuleParts[0], parseOptions));
   var replacement = unwrapRewriteNode(esprima.parse(rewriteRuleParts[1], parseOptions));
 
-  var wildcards = {};
   return falafel(js, parseOptions, function(node) {
+    var wildcards = {};
     var matched = matchNode(wildcards, pattern, node);
     if (matched) {
       var replaced = replaceWildcards(wildcards, _.clone(replacement));
