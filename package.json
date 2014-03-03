@@ -1,7 +1,21 @@
 {
   "name": "jsfmt",
   "description": "gofmt for javascript",
-  "version": "0.0.1",
+  "version": "0.0.2",
+  "homepage": "https://github.com/rdio/jsfmt",
+  "main": "index.js",
+  "engines": {
+    "node": ">=0.4.0"
+  },
+  "bin": {
+    "jsfmt": "./bin/jsfmt"
+  },
+  "maintainers": [
+    {
+      "name": "Jim Fleming",
+      "email": "jim.fleming@rd.io"
+    }
+  ],
   "dependencies": {
     "falafel": "*",
     "esprima": "*",
@@ -10,7 +24,25 @@
     "tmp": "*",
     "minimist": "*"
   },
-  "bin": {
-    "jsfmt": "./bin/jsfmt"
-  }
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rdio/jsfmt"
+  },
+  "bugs": {
+    "url": "https://github.com/rdio/jsfmt/issues"
+  },
+  "licenses": [
+    {
+      "type": "Apache2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ],
+  "keywords": [
+    "ast",
+    "javascript",
+    "parser",
+    "rewrite",
+    "syntax",
+    "format"
+  ]
 }
