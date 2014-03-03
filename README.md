@@ -61,11 +61,6 @@ values.reduce(function (sum, value) {
 }, 0);
 ```
 
-TODO
----
-
-1. Allow rewriting whole expressions, not just identifiers
-
 License
 ---
 
