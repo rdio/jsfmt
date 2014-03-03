@@ -3,6 +3,11 @@ jsfmt
 
 `jsfmt` formats javascript and allows AST rewriting. Analagous to [`gofmt`](http://golang.org/cmd/gofmt/).
 
+Why
+---
+
+Other javascript formatters exist but most (all?) are not AST based and work on just strings. Using Esprima and Escodegen under the hood we have access to the full AST and can do cool things like intelligent find and replace as in `gofmt`.
+
 Usage
 ---
 
@@ -11,13 +16,50 @@ jsfmt [flags] [path ...]
   -comments=true: print comments
   -d=false: display diffs instead of rewriting files
   -l=false: list files whose formatting differs from jsfmt's
-  -r="": rewrite rule (e.g., 'a[b:len(a)] -> a[b:]')
+  -r="": rewrite rule (see below)
+  -f="": find rule (same as pattern, below)
   -tabs=false: indent with tabs
   -tabwidth=2: tab width
   -w=false: write result to (source) file instead of stdout
 ```
 
 If no path is given it will read from `stdin`. A directory path will format all *.js files in the directory. By default, `jsfmt` prints the reformatted sources to standard output.
+
+Rewriting
+---
+
+The rewrite rule allows rewriting portions of the javascript's AST before formatting. This is especially handy for intelligent renaming and handling API changes from a library. The `-r` flag must be a string of the form:
+
+    pattern -> replacement
+
+Both `pattern` and `replacement` must be valid javascript. In the `pattern`, single-character lowercase identifiers serve as wildcards matching arbitrary identifiers in the matched expression; those expressions will be substituted for the same identifiers in the `replacement`.
+
+Examples
+---
+
+Rewrite occurences of `_.reduce` to use native reduce:
+
+```lang=bash
+jsfmt -r "_.reduce(a, function(b, c) { return b + c }, 0) -> a.reduce(function(b, c) { return b + c }, 0)" examples/reduce.js
+```
+
+Before:
+
+```lang=javascript
+var values = [1, 2, 3, 4];
+_.reduce(values, function(sum, value) {
+  return sum + value;
+}, 0);
+```
+
+After:
+
+```lang=javascript
+var values = [1, 2, 3, 4];
+values.reduce(function (sum, value) {
+  return sum + value;
+}, 0);
+```
 
 TODO
 ---

@@ -234,11 +234,26 @@ exports.rewriteJavascript = function(js, rewriteRule) {
 
   return falafel(js, parseOptions, function(node) {
     var wildcards = {};
-    var matched = matchNode(wildcards, pattern, node);
-    if (matched) {
-      var replaced = replaceWildcards(wildcards, _.clone(replacement));
-      var updated = escodegen.generate(replaced);
-      node.update(updated);
+    if (matchNode(wildcards, pattern, node)) {
+      node.update(escodegen.generate(replaceWildcards(wildcards, _.clone(replacement))));
     }
   });
+}
+
+exports.findJavascript = function(js, findRule) {
+  var findPattern = unwrapRewriteNode(esprima.parse(findRule, { raw: true }));
+
+  var matches = [];
+  falafel(js, { raw: true, loc: true }, function(node) {
+    var wildcards = {};
+    if (matchNode(wildcards, findPattern, node)) {
+      var match = escodegen.generate(node.parent);
+      var loc = node.loc;
+      matches.push({
+        text: match,
+        lines: [loc.start.line, loc.end.line]
+      });
+    }
+  });
+  return matches;
 }

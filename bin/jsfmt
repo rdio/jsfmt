@@ -66,6 +66,18 @@ function handleDiff(fullPath, originalJavascript, formattedJavascript) {
 function handleJavascript(fullPath, original) {
   var js = original;
 
+  if (options.f) {
+    var matches = jsfmt.findJavascript(js, options.f);
+    var cwd = process.cwd();
+    var relativePath = path.relative(cwd, fullPath);
+    _.each(matches, function(match) {
+      var lines = _.uniq(match.lines).join(':');
+      console.log([relativePath, lines].join(':'));
+      console.log(match.text, '\n');
+    });
+    return;
+  }
+
   if (options.r) {
     js = jsfmt.rewriteJavascript(js, options.r);
   }
