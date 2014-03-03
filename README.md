@@ -8,5 +8,4 @@ Without an explicit path, it processes the standard input. Given a file, it oper
 TODO
 ===
 
-1. Handle directories
-2. Rewrite expressions, not just identifiers
+1. Rewrite expressions, not just identifiers

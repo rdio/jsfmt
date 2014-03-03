@@ -86,13 +86,29 @@ function handleJavascript(fullPath, original) {
   } 
 }
 
+function handleDirectory(currentPath, callback) {
+  child_process.execFile('find', [currentPath], function(err, stdout, stderr) {
+    var paths = _.filter(stdout.split('\n').slice(1, -1), function(currentPath) {
+      return path.basename(currentPath).indexOf('.') != 0; // Remove hidden files
+    });
+    callback(paths);
+  });
+}
+
 var paths = options._;
 
 if (paths.length > 0) {
   paths.forEach(function(currentPath) {
     var fullPath = path.join(process.cwd(), currentPath);
-    var js = fs.readFileSync(fullPath, 'utf-8');
-    handleJavascript(fullPath, js);
+    if (fs.statSync(fullPath).isDirectory()) {
+      handleDirectory(fullPath, function(paths) {
+        _.each(paths, function(fullPath) {
+          handleJavascript(path.normalize(fullPath), fs.readFileSync(fullPath, 'utf-8'));
+        });
+      });
+    } else {
+      handleJavascript(fullPath, fs.readFileSync(fullPath, 'utf-8'));
+    }
   });
 } else {
   var js = '';
