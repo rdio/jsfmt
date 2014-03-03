@@ -3,10 +3,15 @@ jsfmt
 
 `jsfmt` formats javascript and allows AST rewriting. Analagous to [`gofmt`](http://golang.org/cmd/gofmt/).
 
+Installation
+---
+
+`npm install -g jsfmt`
+
 Why
 ---
 
-Other javascript formatters exist but most (all?) are not AST based and work on just strings. Using Esprima and Escodegen under the hood we have access to the full AST and can do cool things like intelligent find and replace as in `gofmt`.
+Javascript formatters exist but most (all?) work on just strings, not the AST. Using Esprima and Escodegen under the hood we have access to the full AST and can do cool things like intelligent find and replace as in `gofmt`.
 
 Usage
 ---
