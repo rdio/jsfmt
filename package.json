@@ -1,0 +1,16 @@
+{
+  "name": "jsfmt",
+  "description": "gofmt for javascript",
+  "version": "0.0.1",
+  "dependencies": {
+    "falafel": "*",
+    "esprima": "*",
+    "escodegen": "*",
+    "underscore": "*",
+    "tmp": "*",
+    "minimist": "*"
+  },
+  "bin": {
+    "jsfmt": "./bin/jsfmt"
+  }
+}

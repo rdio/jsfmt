@@ -1,0 +1,109 @@
+#!/usr/bin/env node
+var fs = require('fs');
+var _ = require('underscore');
+var util = require('util');
+var path = require('path');
+var child_process = require('child_process');
+var jsfmt = require('../index.js');
+
+var tmp = require('tmp');
+tmp.setGracefulCleanup();
+
+var argv = require('minimist')(process.argv.slice(2));
+
+if (argv.help) {
+  console.log('jsfmt [flags] [path ...]');
+  console.log('\t-comments=true: print comments');
+  console.log('\t-d=false: display diffs instead of rewriting files');
+  console.log("\t-l=false: list files whose formatting differs from jsfmt's");
+  console.log('\t-r="": rewrite rule (e.g., \'a[b:len(a)] -> a[b:]\')');
+  console.log('\t-tabs=false: indent with tabs');
+  console.log('\t-tabwidth=2: tab width');
+  console.log('\t-w=false: write result to (source) file instead of stdout');
+  return;
+}
+
+var options = _.defaults(argv, {
+  comments: true,
+  tabwidth: 2
+});
+
+function diff(pathA, pathB, callback) {
+  child_process.exec([
+    'git', 'diff', '--ignore-space-at-eol', '-b', '--no-index', '--', pathA, pathB
+  ].join(' '), callback);
+}
+
+function handleDiff(fullPath, originalJavascript, formattedJavascript) {
+  if (fullPath == 'stdin') {
+    tmp.file(function(err, pathA, fdA) {
+      if (err) throw err;
+      fs.writeSync(fdA, originalJavascript);
+
+      tmp.file(function(err, pathB, fdB) {
+        if (err) throw err;
+        fs.writeSync(fdB, formattedJavascript);
+
+        diff(pathA, pathB, function(err, stdout, stderr) {
+          if (stdout) console.log(stdout);
+          if (stderr) console.log(stderr);
+        });
+      });
+    });
+  } else {
+    tmp.file(function(err, pathA, fdA) {
+      if (err) throw err;
+      fs.writeSync(fdA, formattedJavascript);
+
+      diff(fullPath, pathA, function(err, stdout, stderr) {
+        if (stdout) console.log(stdout);
+        if (stderr) console.log(stderr);
+      });
+    });
+  }
+}
+
+function handleJavascript(fullPath, original) {
+  var js = original;
+
+  if (options.r) {
+    js = jsfmt.rewriteJavascript(js, options.r);
+  }
+
+  var formattedJavascript = jsfmt.formatJavascript(js, options);
+
+  if (options.d) {
+    handleDiff(fullPath, original, formattedJavascript)
+  } else if (options.l && js != formattedJavascript) {
+    // Print filenames who differ
+    console.log(fullPath);
+  } else if (options.w) {
+    // Overwrite original file
+    fs.writeFileSync(fullPath, formattedJavascript);
+  } else {
+    // Print to stdout
+    console.log(formattedJavascript);
+  } 
+}
+
+var paths = options._;
+
+if (paths.length > 0) {
+  paths.forEach(function(currentPath) {
+    var fullPath = path.join(process.cwd(), currentPath);
+    var js = fs.readFileSync(fullPath, 'utf-8');
+    handleJavascript(fullPath, js);
+  });
+} else {
+  var js = '';
+  process.stdin.setEncoding('utf8');
+  process.stdin.on('readable', function(chunk) {
+    var chunk = process.stdin.read();
+    if (chunk != null) {
+      js += chunk;
+    }
+  });
+  process.stdin.on('end', function() {
+    handleJavascript('stdin', js);
+  });
+}
