@@ -17,6 +17,14 @@ function isWildcard(name) {
 }
 
 function matchNode(wildcards, pattern, node) {
+  if (pattern == null && node != null) {
+    return false;
+  }
+
+  if (pattern != null && node == null) {
+    return false;
+  }
+
   if (wildcards != null && pattern.type == 'Identifier' && isWildcard(pattern.name) && node.type == 'Identifier') {
     if (pattern.name in wildcards) {
       return matchNode(null, wildcards[pattern.name], node);
@@ -49,6 +57,13 @@ function matchNode(wildcards, pattern, node) {
       }
       return matchNode(wildcards, pattern.object, node.object)
           && matchNode(wildcards, pattern.property, node.property);
+    case 'ArrayExpression':
+      for (var i = 0; i < pattern.elements.length; i++) {
+        if (!matchNode(wildcards, pattern.elements[i], node.elements[i])) {
+          return false;
+        }
+      }
+      return true;
     case 'BinaryExpression':
       if (pattern.operator != node.operator) {
         return false;
@@ -157,6 +172,11 @@ function replaceWildcards(wildcards, replacement) {
     case 'Program':
       for (var i = 0; i < replacement.body.length; i++) {
         replacement.body[i] = replaceWildcards(wildcards, replacement.body[i]);
+      }
+      break;
+    case 'ArrayExpression':
+      for (var i = 0; i < replacement.elements.length; i++) {
+        replacement.elements[i] = replaceWildcards(wildcards, replacement.elements[i]);
       }
       break;
     case 'MemberExpression':
