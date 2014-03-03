@@ -87,8 +87,8 @@ function handleJavascript(fullPath, original) {
 }
 
 function handleDirectory(currentPath, callback) {
-  child_process.execFile('find', [currentPath], function(err, stdout, stderr) {
-    var paths = _.filter(stdout.split('\n').slice(1, -1), function(currentPath) {
+  child_process.execFile('find', [currentPath, '-name', '*.js'], function(err, stdout, stderr) {
+    var paths = _.filter(stdout.split('\n').slice(0, -1), function(currentPath) {
       return path.basename(currentPath).indexOf('.') != 0; // Remove hidden files
     });
     callback(paths);
