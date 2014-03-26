@@ -1,7 +1,7 @@
 {
   "name": "jsfmt",
   "description": "gofmt for javascript",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "homepage": "https://github.com/rdio/jsfmt",
   "main": "index.js",
   "engines": {
@@ -16,7 +16,7 @@
       "email": "jim.fleming@rd.io"
     }
   ],
-  "dependencies": {
+  "dependt encies": {
     "falafel": "*",
     "esprima": "*",
     "escodegen": "*",
