@@ -16,16 +16,15 @@ if (argv.help) {
   console.log('\t-comments=true: print comments');
   console.log('\t-d=false: display diffs instead of rewriting files');
   console.log("\t-l=false: list files whose formatting differs from jsfmt's");
-  console.log('\t-r="": rewrite rule (e.g., \'a[b:len(a)] -> a[b:]\')');
-  console.log('\t-tabs=false: indent with tabs');
-  console.log('\t-tabwidth=2: tab width');
+  console.log('\t-r="": rewrite rule (e.g., \'a.slice(b, len(a) -> a.slice(b)\')');
+  console.log('\t-f="": find rule (e.g., \'a.slice\')');
+  console.log('\t-p=true: include parent node in find results');
   console.log('\t-w=false: write result to (source) file instead of stdout');
   return;
 }
 
 var options = _.defaults(argv, {
-  comments: true,
-  tabwidth: 2
+  comments: true
 });
 
 function diff(pathA, pathB, callback) {
@@ -67,7 +66,7 @@ function handleJavascript(fullPath, original) {
   var js = original;
 
   if (options.f) {
-    var matches = jsfmt.findJavascript(js, options.f);
+    var matches = jsfmt.findJavascript(js, options.f, options.p);
     var cwd = process.cwd();
     var relativePath = path.relative(cwd, fullPath);
     _.each(matches, function(match) {
