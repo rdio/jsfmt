@@ -18,7 +18,6 @@ if (argv.help) {
   console.log("\t-l=false: list files whose formatting differs from jsfmt's");
   console.log('\t-r="": rewrite rule (e.g., \'a.slice(b, len(a) -> a.slice(b)\')');
   console.log('\t-f="": find rule (e.g., \'a.slice\')');
-  console.log('\t-p=true: include parent node in find results');
   console.log('\t-w=false: write result to (source) file instead of stdout');
   return;
 }
@@ -66,7 +65,7 @@ function handleJavascript(fullPath, original) {
   var js = original;
 
   if (options.f) {
-    var matches = jsfmt.findJavascript(js, options.f, options.p);
+    var matches = jsfmt.findJavascript(js, options.f);
     var cwd = process.cwd();
     var relativePath = path.relative(cwd, fullPath);
     _.each(matches, function(match) {

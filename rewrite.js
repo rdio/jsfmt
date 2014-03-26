@@ -287,14 +287,14 @@ exports.rewriteJavascript = function(js, rewriteRule) {
   });
 }
 
-exports.findJavascript = function(js, findRule, includeParent) {
+exports.findJavascript = function(js, findRule) {
   var findPattern = unwrapRewriteNode(esprima.parse(findRule, { raw: true }));
 
   var matches = [];
   falafel(js, { raw: true, loc: true }, function(node) {
     var wildcards = {};
     if (matchNode(wildcards, findPattern, node)) {
-      node = (includeParent && node.parent) ? node.parent : node;
+      node = node.parent ? node.parent : node;
 
       var match = escodegen.generate(node);
       var loc = node.loc;
