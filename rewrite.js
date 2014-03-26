@@ -287,22 +287,13 @@ exports.rewriteJavascript = function(js, rewriteRule) {
   });
 }
 
-exports.findJavascript = function(js, findRule) {
+exports.findJavascript = function(js, findRule, callback) {
   var findPattern = unwrapRewriteNode(esprima.parse(findRule, { raw: true }));
 
-  var matches = [];
   falafel(js, { raw: true, loc: true }, function(node) {
     var wildcards = {};
     if (matchNode(wildcards, findPattern, node)) {
-      node = node.parent ? node.parent : node;
-
-      var match = escodegen.generate(node);
-      var loc = node.loc;
-      matches.push({
-        text: match,
-        lines: [loc.start.line, loc.end.line]
-      });
+      callback(node);
     }
   });
-  return matches;
 }

@@ -4,6 +4,8 @@ var _ = require('underscore');
 var util = require('util');
 var path = require('path');
 var child_process = require('child_process');
+
+var escodegen = require('escodegen');
 var jsfmt = require('../index.js');
 
 var tmp = require('tmp');
@@ -65,13 +67,15 @@ function handleJavascript(fullPath, original) {
   var js = original;
 
   if (options.f) {
-    var matches = jsfmt.findJavascript(js, options.f);
     var cwd = process.cwd();
     var relativePath = path.relative(cwd, fullPath);
-    _.each(matches, function(match) {
-      var lines = _.uniq(match.lines).join(':');
+    var matches = jsfmt.findJavascript(js, options.f, function(node) {
+      node = node.parent ? node.parent : node;
+
+      var loc = node.loc;
+      var lines = _.uniq([loc.start.line, loc.end.line]).join(':');
       console.log([relativePath, lines].join(':'));
-      console.log(match.text, '\n');
+      console.log(escodegen.generate(node), '\n');
     });
     return;
   }
