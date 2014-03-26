@@ -16,7 +16,7 @@
       "email": "jim.fleming@rd.io"
     }
   ],
-  "dependt encies": {
+  "dependencies": {
     "falafel": "*",
     "esprima": "*",
     "escodegen": "*",
