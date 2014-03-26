@@ -21,10 +21,8 @@ jsfmt [flags] [path ...]
   -comments=true: print comments
   -d=false: display diffs instead of rewriting files
   -l=false: list files whose formatting differs from jsfmt's
-  -r="": rewrite rule (see below)
-  -f="": find rule (same as replace "pattern"; see below)
-  -tabs=false: indent with tabs
-  -tabwidth=2: tab width
+  -r="": rewrite rule (e.g., 'a.slice(b, len(a) -> a.slice(b)')
+  -f="": find rule (e.g., 'a.slice')
   -w=false: write result to (source) file instead of stdout
 ```
 
@@ -37,7 +35,7 @@ The rewrite rule allows rewriting portions of the javascript's AST before format
 
     pattern -> replacement
 
-Both `pattern` and `replacement` must be valid javascript. In the `pattern`, single-character lowercase identifiers serve as wildcards matching arbitrary identifiers in the matched expression; those expressions will be substituted for the same identifiers in the `replacement`.
+Both `pattern` and `replacement` must be valid javascript. In the `pattern`, single-character lowercase identifiers serve as wildcards matching arbitrary expressions; those expressions will be substituted for the same identifiers in the `replacement`.
 
 Examples
 ---
@@ -45,7 +43,7 @@ Examples
 Rewrite occurences of `_.reduce` to use native reduce:
 
 ```lang=bash
-jsfmt -r "_.reduce(a, function(b, c) { return b + c }, 0) -> a.reduce(function(b, c) { return b + c }, 0)" examples/reduce.js
+jsfmt -r "_.reduce(a, b, c) -> a.reduce(b, c)" examples/reduce.js
 ```
 
 Before:
@@ -61,7 +59,7 @@ After:
 
 ```lang=javascript
 var values = [1, 2, 3, 4];
-values.reduce(function (sum, value) {
+values.reduce(function(sum, value) {
   return sum + value;
 }, 0);
 ```
