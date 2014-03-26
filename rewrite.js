@@ -1,3 +1,5 @@
+var util = require('util');
+
 var esprima = require('esprima');
 var falafel = require('falafel');
 var escodegen = require('escodegen');
@@ -25,7 +27,7 @@ function matchNode(wildcards, pattern, node) {
     return false;
   }
 
-  if (wildcards != null && pattern.type == 'Identifier' && isWildcard(pattern.name) && node.type == 'Identifier') {
+  if (wildcards != null && pattern.type == 'Identifier' && isWildcard(pattern.name)) {
     if (pattern.name in wildcards) {
       return matchNode(null, wildcards[pattern.name], node);
     }
@@ -51,6 +53,12 @@ function matchNode(wildcards, pattern, node) {
       return true;
     case 'Identifier':
       return pattern.name == node.name;
+    case 'Property':
+      if (pattern.kind != node.kind) {
+        return false;
+      }
+      return matchNode(wildcards, pattern.key, node.key)
+          && matchNode(wildcards, pattern.value, node.value);
     case 'MemberExpression':
       if (pattern.computed != node.computed) {
         return false;
@@ -60,6 +68,15 @@ function matchNode(wildcards, pattern, node) {
     case 'ArrayExpression':
       for (var i = 0; i < pattern.elements.length; i++) {
         if (!matchNode(wildcards, pattern.elements[i], node.elements[i])) {
+          return false;
+        }
+      }
+      return true;
+    case 'ObjectExpression':
+      for (var i = 0; i < pattern.properties.length; i++) {
+        if (!_.some(node.properties, function(property) {
+          return matchNode(wildcards, pattern.properties[i], node.properties[i]);
+        })) {
           return false;
         }
       }
@@ -195,6 +212,11 @@ function replaceWildcards(wildcards, replacement) {
         replacement.params[i] = replaceWildcards(wildcards, replacement.params[i]);
       }
       break;
+    case 'Property':
+      replacement.key = replaceWildcards(wildcards, replacement.key);
+      replacement.value = replaceWildcards(wildcards, replacement.value);
+      replacement.kind = replaceWildcards(wildcards, replacement.kind);
+      break;
     case 'BinaryExpression':
       replacement.left = replaceWildcards(wildcards, replacement.left);
       replacement.right = replaceWildcards(wildcards, replacement.right);
@@ -226,6 +248,11 @@ function replaceWildcards(wildcards, replacement) {
       replacement.test = replaceWildcards(wildcards, replacement.test);
       replacement.update = replaceWildcards(wildcards, replacement.update);
       replacement.body = replaceWildcards(wildcards, replacement.body);
+      break;
+    case 'ObjectExpression':
+      for (var i = 0; i < replacement.properties.length; i++) {
+        replacement.properties[i] = replaceWildcards(wildcards, replacement.properties[i]);
+      }
       break;
     case 'Literal':
       break; // no-op
