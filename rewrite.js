@@ -42,11 +42,10 @@ function matchNode(wildcards, pattern, node) {
   switch (pattern.type) {
     case 'Program':
     case 'BlockStatement':
-      if (pattern.body.length != node.body.length) {
-        return false;
-      }
       for (var i = 0; i < pattern.body.length; i++) {
-        if (!matchNode(wildcards, pattern.body[i], node.body[i])) {
+        if (!_.any(node.body, function(body) {
+          return matchNode(wildcards, pattern.body[i], body);
+        })) {
           return false;
         }
       }
@@ -67,15 +66,17 @@ function matchNode(wildcards, pattern, node) {
           && matchNode(wildcards, pattern.property, node.property);
     case 'ArrayExpression':
       for (var i = 0; i < pattern.elements.length; i++) {
-        if (!matchNode(wildcards, pattern.elements[i], node.elements[i])) {
+        if (!_.any(node.elements, function(element) {
+          return matchNode(wildcards, pattern.elements[i], element);
+        })) {
           return false;
         }
       }
       return true;
     case 'ObjectExpression':
       for (var i = 0; i < pattern.properties.length; i++) {
-        if (!_.some(node.properties, function(property) {
-          return matchNode(wildcards, pattern.properties[i], node.properties[i]);
+        if (!_.any(node.properties, function(property) {
+          return matchNode(wildcards, pattern.properties[i], property);
         })) {
           return false;
         }
@@ -95,16 +96,15 @@ function matchNode(wildcards, pattern, node) {
     case 'VariableDeclaration':
       if (pattern.kind != node.kind) {
         return false;
-      } else if (pattern.declarations.length != node.declarations.length) {
-        return false;
-      } else {
-        for (var i = 0; i < pattern.declarations.length; i++) {
-          if (!matchNode(wildcards, pattern.declarations[i], node.declarations[i])) {
-            return false;
-          }
-        }
-        return true;
       }
+      for (var i = 0; i < pattern.declarations.length; i++) {
+        if (!_.any(node.declarations, function(declaration) {
+          return matchNode(wildcards, pattern.declarations[i], declaration);
+        })) {
+          return false;
+        }
+      }
+      return true;
     case 'FunctionExpression':
       if (pattern.id != node.id) {
         return false;
@@ -157,11 +157,10 @@ function matchNode(wildcards, pattern, node) {
       if (!matchNode(wildcards, pattern.callee, node.callee)) {
         return false;
       }
-      if (pattern.arguments.length != node.arguments.length) {
-        return false;
-      }
       for (var i = 0; i < pattern.arguments.length; i++) {
-        if (!matchNode(wildcards, pattern.arguments[i], node.arguments[i])) {
+        if (!_.any(node.arguments, function(argument) {
+          return matchNode(wildcards, pattern.arguments[i], argument);
+        })) {
           return false;
         }
       }
@@ -287,13 +286,15 @@ exports.rewriteJavascript = function(js, rewriteRule) {
   });
 }
 
-exports.findJavascript = function(js, findRule, callback) {
-  var findPattern = unwrapRewriteNode(esprima.parse(findRule, { raw: true }));
+exports.findJavascript = function(js, findRule) {
+  var pattern = unwrapRewriteNode(esprima.parse(findRule, { raw: true }));
 
+  var matches = [];
   falafel(js, { raw: true, loc: true }, function(node) {
     var wildcards = {};
-    if (matchNode(wildcards, findPattern, node)) {
-      callback(node, wildcards);
+    if (matchNode(wildcards, pattern, node)) {
+      matches.push({ node: node, wildcards: wildcards })
     }
   });
+  return matches;
 }

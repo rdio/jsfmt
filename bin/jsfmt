@@ -69,11 +69,9 @@ function handleJavascript(fullPath, original) {
   if (options.f) {
     var cwd = process.cwd();
     var relativePath = path.relative(cwd, fullPath);
-    var matches = jsfmt.findJavascript(js, options.f, function(node, wildcards) {
-      node = node.parent ? node.parent : node;
-
-      var loc = node.loc;
-      var lines = _.uniq([loc.start.line, loc.end.line]).join(':');
+    jsfmt.findJavascript(js, options.f).forEach(function(match) {
+      var node = match.node.parent ? match.node.parent : match.node;
+      var lines = _.uniq([node.loc.start.line, node.loc.end.line]).join(':');
       console.log([relativePath, lines].join(':'));
       console.log(escodegen.generate(node), '\n');
     });
