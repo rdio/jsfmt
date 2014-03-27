@@ -1,7 +1,7 @@
 {
   "name": "jsfmt",
   "description": "gofmt for javascript",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "homepage": "https://github.com/rdio/jsfmt",
   "main": "index.js",
   "engines": {
