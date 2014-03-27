@@ -1,11 +1,13 @@
 #!/usr/bin/env node
 var fs = require('fs');
-var _ = require('underscore');
 var util = require('util');
 var path = require('path');
 var child_process = require('child_process');
 
+var esformatter = require('esformatter');
 var escodegen = require('escodegen');
+var _ = require('underscore');
+
 var jsfmt = require('../index.js');
 
 var tmp = require('tmp');
@@ -64,6 +66,13 @@ function handleDiff(fullPath, originalJavascript, formattedJavascript) {
 }
 
 function handleJavascript(fullPath, original) {
+  var formattingOptions = {
+    preset: 'default',
+    indent: {
+      value: '  '
+    }
+  };
+
   var js = original;
 
   if (options.f) {
@@ -71,18 +80,24 @@ function handleJavascript(fullPath, original) {
     var relativePath = path.relative(cwd, fullPath);
     jsfmt.findJavascript(js, options.f).forEach(function(match) {
       var node = match.node.parent ? match.node.parent : match.node;
-      var lines = _.uniq([node.loc.start.line, node.loc.end.line]).join(':');
-      console.log([relativePath, lines].join(':'));
-      console.log(escodegen.generate(node), '\n');
+      var startLine = node.loc.start.line;
+      var endLine = node.loc.end.line;
+
+      console.log([relativePath, _.uniq([startLine, endLine]).join(':')].join(':'));
+
+      var partialJavascript = js.split('\n').slice(startLine - 1, endLine).join('\n');
+      var formattedJavascript = esformatter.format(partialJavascript, formattingOptions);
+
+      console.log(formattedJavascript, '\n');
     });
     return;
   }
 
   if (options.r) {
-    js = jsfmt.rewriteJavascript(js, options.r);
+    js = jsfmt.rewriteJavascript(js, options.r).toString();
   }
 
-  var formattedJavascript = jsfmt.formatJavascript(js, options);
+  var formattedJavascript = esformatter.format(js, formattingOptions);
 
   if (options.d) {
     handleDiff(fullPath, original, formattedJavascript)

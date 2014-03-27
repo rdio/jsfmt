@@ -18,8 +18,10 @@
   ],
   "dependencies": {
     "falafel": "*",
-    "esprima": "*",
+    "rocambole": "*",
+    "esformatter": "*",
     "escodegen": "*",
+    "esprima": "*",
     "underscore": "*",
     "tmp": "*",
     "minimist": "*"
