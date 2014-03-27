@@ -293,7 +293,7 @@ exports.findJavascript = function(js, findRule, callback) {
   falafel(js, { raw: true, loc: true }, function(node) {
     var wildcards = {};
     if (matchNode(wildcards, findPattern, node)) {
-      callback(node);
+      callback(node, wildcards);
     }
   });
 }

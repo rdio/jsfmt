@@ -69,7 +69,7 @@ function handleJavascript(fullPath, original) {
   if (options.f) {
     var cwd = process.cwd();
     var relativePath = path.relative(cwd, fullPath);
-    var matches = jsfmt.findJavascript(js, options.f, function(node) {
+    var matches = jsfmt.findJavascript(js, options.f, function(node, wildcards) {
       node = node.parent ? node.parent : node;
 
       var loc = node.loc;
