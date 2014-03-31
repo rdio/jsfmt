@@ -13,22 +13,41 @@ var jsfmt = require('../index.js');
 var tmp = require('tmp');
 tmp.setGracefulCleanup();
 
-var argv = require('minimist')(process.argv.slice(2));
+var argv = require('minimist')(process.argv.slice(2), {
+  'string': ['rewrite', 'search'],
+  'boolean': ['comments', 'diff', 'format', 'list', 'write'],
+  'default': {
+    comments: true,
+    diff: false,
+    format: false,
+    list: false,
+    write: false
+  },
+  'alias': {
+    comments: 'c',
+    diff: 'd',
+    format: 'f',
+    list: 'l',
+    write: 'w'
+  }
+});
 
-if (argv.help) {
+if (argv.help || (!argv.format && !argv.search && !argv.rewrite)) {
   console.log('jsfmt [flags] [path ...]');
-  console.log('\t-comments=true: print comments');
-  console.log('\t-d=false: display diffs instead of rewriting files');
-  console.log("\t-l=false: list files whose formatting differs from jsfmt's");
-  console.log('\t-r="": rewrite rule (e.g., \'a.slice(b, len(a) -> a.slice(b)\')');
-  console.log('\t-f="": find rule (e.g., \'a.slice\')');
-  console.log('\t-w=false: write result to (source) file instead of stdout');
+  console.log('\tAction:');
+  console.log('\t--format=false, -f=false: format the input javascript');
+  console.log('\t--search="", -s="": search rule (e.g., \'a.slice\')');
+  console.log('\t--rewrite="", -r="": rewrite rule (e.g., \'a.slice(b, len(a) -> a.slice(b)\')');
+  console.log('');
+  console.log('\tOutput (default is stdout):');
+  console.log("\t--list=false, -l=false: list files whose formatting differs from jsfmt's");
+  console.log('\t--diff=false, -d=false: display diffs instead of rewriting files');
+  console.log('\t--write=false, -w=false: write result to (source) file instead of stdout');
+  console.log('');
+  console.log('\tConfig:');
+  console.log('\t--comments=true, -c=true: include comments in result');
   return;
 }
-
-var options = _.defaults(argv, {
-  comments: true
-});
 
 function diff(pathA, pathB, callback) {
   child_process.exec([
@@ -75,10 +94,10 @@ function handleJavascript(fullPath, original) {
 
   var js = original;
 
-  if (options.f) {
+  if (argv.search) {
     var cwd = process.cwd();
     var relativePath = path.relative(cwd, fullPath);
-    jsfmt.findJavascript(js, options.f).forEach(function(match) {
+    jsfmt.search(js, argv.search).forEach(function(match) {
       var node = match.node.parent ? match.node.parent : match.node;
       var startLine = node.loc.start.line;
       var endLine = node.loc.end.line;
@@ -93,23 +112,25 @@ function handleJavascript(fullPath, original) {
     return;
   }
 
-  if (options.r) {
-    js = jsfmt.rewriteJavascript(js, options.r).toString();
+  if (argv.rewrite) {
+    js = jsfmt.rewrite(js, argv.rewrite).toString();
   }
 
-  var formattedJavascript = esformatter.format(js, formattingOptions);
+  if (argv.format) {
+    js = esformatter.format(js, formattingOptions);
+  }
 
-  if (options.d) {
-    handleDiff(fullPath, original, formattedJavascript)
-  } else if (options.l && js != formattedJavascript) {
+  if (argv.diff) {
+    handleDiff(fullPath, original, js)
+  } else if (argv.list && original != js) {
     // Print filenames who differ
     console.log(fullPath);
-  } else if (options.w) {
+  } else if (argv.write) {
     // Overwrite original file
-    fs.writeFileSync(fullPath, formattedJavascript);
+    fs.writeFileSync(fullPath, js);
   } else {
     // Print to stdout
-    console.log(formattedJavascript);
+    console.log(js);
   } 
 }
 
@@ -122,7 +143,7 @@ function handleDirectory(currentPath, callback) {
   });
 }
 
-var paths = options._;
+var paths = argv._;
 
 if (paths.length > 0) {
   paths.forEach(function(currentPath) {
