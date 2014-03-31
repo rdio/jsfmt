@@ -98,7 +98,7 @@ function handleJavascript(fullPath, original) {
     var cwd = process.cwd();
     var relativePath = path.relative(cwd, fullPath);
     jsfmt.search(js, argv.search).forEach(function(match) {
-      var node = match.node.parent ? match.node.parent : match.node;
+      var node = match.node;
       var startLine = node.loc.start.line;
       var endLine = node.loc.end.line;
 
