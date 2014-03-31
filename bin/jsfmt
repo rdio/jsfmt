@@ -28,6 +28,8 @@ var argv = require('minimist')(process.argv.slice(2), {
     diff: 'd',
     format: 'f',
     list: 'l',
+    rewrite: 'r',
+    search: 's',
     write: 'w'
   }
 });
@@ -99,15 +101,13 @@ function handleJavascript(fullPath, original) {
     var relativePath = path.relative(cwd, fullPath);
     jsfmt.search(js, argv.search).forEach(function(match) {
       var node = match.node;
-      var startLine = node.loc.start.line;
-      var endLine = node.loc.end.line;
-
+      var loc = node.loc;
+      var startLine = loc.start.line;
+      var endLine = loc.end.line;
       console.log([relativePath, _.uniq([startLine, endLine]).join(':')].join(':'));
 
       var partialJavascript = js.split('\n').slice(startLine - 1, endLine).join('\n');
-      var formattedJavascript = esformatter.format(partialJavascript, formattingOptions);
-
-      console.log(formattedJavascript, '\n');
+      console.log(partialJavascript, '\n');
     });
     return;
   }

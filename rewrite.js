@@ -17,6 +17,37 @@ function isWildcard(name) {
   return /\b[a-z]\b/g.test(name);
 }
 
+function partial(wildcards, patterns, nodes) {
+  // Copy nodes so we don't affect the original.
+  nodes = nodes.slice();
+
+  // Given an array of patterns, are each satisfied by
+  // a unique node in the array of nodes.
+  return _.all(patterns, function(pattern) {
+    var index = -1;
+
+    // Using _.any, instead of _.reject since it breaks
+    // iteration on the first truthy result.
+    _.any(nodes, function(node, i) {
+      if (match(wildcards, pattern, node)) {
+        index = i;
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+    if (index > -1) {
+      // Remove the node so we don't consider it again and
+      // fulfill a different wildcard.
+      nodes.splice(index, 1);
+      return true;
+    } else {
+      return false;
+    }
+  });
+}
+
 function match(wildcards, pattern, node) {
   if (pattern == null && node != null) {
     return false;
@@ -41,14 +72,7 @@ function match(wildcards, pattern, node) {
   switch (pattern.type) {
     case 'Program':
     case 'BlockStatement':
-      for (var i = 0; i < pattern.body.length; i++) {
-        if (!_.any(node.body, function(body) {
-          return match(wildcards, pattern.body[i], body);
-        })) {
-          return false;
-        }
-      }
-      return true;
+      return partial(wildcards, pattern.body, node.body);
     case 'Identifier':
       return pattern.name == node.name;
     case 'Property':
@@ -64,23 +88,9 @@ function match(wildcards, pattern, node) {
       return match(wildcards, pattern.object, node.object)
           && match(wildcards, pattern.property, node.property);
     case 'ArrayExpression':
-      for (var i = 0; i < pattern.elements.length; i++) {
-        if (!_.any(node.elements, function(element) {
-          return match(wildcards, pattern.elements[i], element);
-        })) {
-          return false;
-        }
-      }
-      return true;
+      return partial(wildcards, pattern.elements, node.elements);
     case 'ObjectExpression':
-      for (var i = 0; i < pattern.properties.length; i++) {
-        if (!_.any(node.properties, function(property) {
-          return match(wildcards, pattern.properties[i], property);
-        })) {
-          return false;
-        }
-      }
-      return true;
+      return partial(wildcards, pattern.properties, node.properties);
     case 'BinaryExpression':
       if (pattern.operator != node.operator) {
         return false;
@@ -96,14 +106,7 @@ function match(wildcards, pattern, node) {
       if (pattern.kind != node.kind) {
         return false;
       }
-      for (var i = 0; i < pattern.declarations.length; i++) {
-        if (!_.any(node.declarations, function(declaration) {
-          return match(wildcards, pattern.declarations[i], declaration);
-        })) {
-          return false;
-        }
-      }
-      return true;
+      return partial(wildcards, pattern.declarations, node.declarations);
     case 'FunctionExpression':
       if (pattern.id != node.id) {
         return false;
@@ -117,21 +120,11 @@ function match(wildcards, pattern, node) {
       if (pattern.expression != node.expression) {
         return false;
       }
-      if (pattern.params.length != node.params.length) {
+      if (!partial(wildcards, pattern.params, node.params)) {
         return false;
       }
-      for (var i = 0; i < pattern.params.length; i++) {
-        if (!match(wildcards, pattern.params[i], node.params[i])) {
-          return false;
-        }
-      }
-      if (pattern.defaults.length != node.defaults.length) {
+      if (!partial(wildcards, pattern.defaults, node.defaults)) {
         return false;
-      }
-      for (var i = 0; i < pattern.defaults.length; i++) {
-        if (!match(wildcards, pattern.defaults[i], node.defaults[i])) {
-          return false;
-        }
       }
       if (!match(wildcards, pattern.body, node.body)) {
         return false;
@@ -156,14 +149,7 @@ function match(wildcards, pattern, node) {
       if (!match(wildcards, pattern.callee, node.callee)) {
         return false;
       }
-      for (var i = 0; i < pattern.arguments.length; i++) {
-        if (!_.any(node.arguments, function(argument) {
-          return match(wildcards, pattern.arguments[i], argument);
-        })) {
-          return false;
-        }
-      }
-      return true;
+      return partial(wildcards, pattern.arguments, node.arguments);
     case 'ReturnStatement':
       return match(wildcards, pattern.argument, node.argument);
     default:

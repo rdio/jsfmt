@@ -1,7 +1,7 @@
 jsfmt
 ===
 
-`jsfmt` formats javascript and allows AST rewriting. Analagous to [`gofmt`](http://golang.org/cmd/gofmt/).
+`jsfmt` formats javascript and allows AST searching and rewriting. Analagous to [`gofmt`](http://golang.org/cmd/gofmt/).
 
 Installation
 ---
@@ -11,31 +11,37 @@ Installation
 Why
 ---
 
-Javascript formatters exist but most (all?) work on just strings, not the AST. Using Esprima and Escodegen under the hood we have access to the full AST and can do cool things like intelligent find and replace as in `gofmt`.
+Javascript formatters exist but most (all?) work on just strings, not the AST. Using Esprima under the hood we have access to the full AST and can do useful things like intelligent find and replace as in `gofmt`.
 
 Usage
 ---
 
 ```
 jsfmt [flags] [path ...]
-  -comments=true: print comments
-  -d=false: display diffs instead of rewriting files
-  -l=false: list files whose formatting differs from jsfmt's
-  -r="": rewrite rule (e.g., 'a.slice(b, len(a) -> a.slice(b)')
-  -f="": find rule (e.g., 'a.slice')
-  -w=false: write result to (source) file instead of stdout
+  Action:
+  --format=false, -f=false: format the input javascript
+  --search="", -s="": search rule (e.g., 'a.slice')
+  --rewrite="", -r="": rewrite rule (e.g., 'a.slice(b, len(a) -> a.slice(b)')
+
+  Output (default is stdout):
+  --list=false, -l=false: list files whose formatting differs from jsfmt's
+  --diff=false, -d=false: display diffs instead of rewriting files
+  --write=false, -w=false: write result to (source) file instead of stdout
+
+  Config:
+  --comments=true, -c=true: include comments in result
 ```
 
-If no path is given it will read from `stdin`. A directory path will format all *.js files in the directory. By default, `jsfmt` prints the reformatted sources to standard output.
+At least one action is required. If no path is given it will read from `stdin`. A directory path will recurse over all *.js files in the directory.
 
 Rewriting
 ---
 
-The rewrite rule allows rewriting portions of the javascript's AST before formatting. This is especially handy for intelligent renaming and handling API changes from a library. The `-r` flag must be a string of the form:
+The rewrite rule allows rewriting portions of the javascript's AST before formatting. This is especially handy for intelligent renaming and handling API changes from a library. The `--rewrite` flag must be a string of the form:
 
     pattern -> replacement
 
-Both `pattern` and `replacement` must be valid javascript. In the `pattern`, single-character lowercase identifiers serve as wildcards matching arbitrary expressions; those expressions will be substituted for the same identifiers in the `replacement`.
+Both `pattern` and `replacement` must be valid javascript. In `pattern`, single-character lowercase identifiers serve as wildcards matching arbitrary expressions; those expressions will be substituted for the same identifiers in the `replacement`.
 
 Examples
 ---
@@ -43,7 +49,7 @@ Examples
 Rewrite occurences of `_.reduce` to use native reduce:
 
 ```lang=bash
-jsfmt -r "_.reduce(a, b, c) -> a.reduce(b, c)" examples/reduce.js
+jsfmt --rewrite "_.reduce(a, b, c) -> a.reduce(b, c)" examples/reduce.js
 ```
 
 Before:
