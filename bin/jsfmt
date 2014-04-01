@@ -99,25 +99,39 @@ function handleJavascript(fullPath, original) {
   if (argv.search) {
     var cwd = process.cwd();
     var relativePath = path.relative(cwd, fullPath);
-    jsfmt.search(js, argv.search).forEach(function(match) {
-      var node = match.node;
-      var loc = node.loc;
-      var startLine = loc.start.line;
-      var endLine = loc.end.line;
-      console.log([relativePath, _.uniq([startLine, endLine]).join(':')].join(':'));
+    try {
+      jsfmt.search(js, argv.search).forEach(function(match) {
+        var node = match.node;
+        var loc = node.loc;
+        var startLine = loc.start.line;
+        var endLine = loc.end.line;
+        console.log([relativePath, _.uniq([startLine, endLine]).join(':')].join(':'));
 
-      var partialJavascript = js.split('\n').slice(startLine - 1, endLine).join('\n');
-      console.log(partialJavascript, '\n');
-    });
+        var partialJavascript = js.split('\n').slice(startLine - 1, endLine).join('\n');
+        console.log(partialJavascript, '\n');
+      });
+    } catch (err) {
+      console.error(fullPath, err.message);
+    }
     return;
   }
 
   if (argv.rewrite) {
-    js = jsfmt.rewrite(js, argv.rewrite).toString();
+    try {
+      js = jsfmt.rewrite(js, argv.rewrite).toString();
+    } catch (err) {
+      console.error(fullPath, err);
+      return;
+    }
   }
 
   if (argv.format) {
-    js = esformatter.format(js, formattingOptions);
+    try {
+      js = esformatter.format(js, formattingOptions);
+    } catch (err) {
+      console.error(fullPath, err);
+      return;
+    }
   }
 
   if (argv.diff) {
