@@ -4,6 +4,10 @@ var falafel = require('falafel');
 var escodegen = require('escodegen');
 var _ = require('underscore');
 
+function clone(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
+
 function unwrapRewriteNode(node) {
   if (node.type == 'Program' && node.body.length > 0) {
     node = unwrapRewriteNode(node.body[0]);
@@ -13,8 +17,8 @@ function unwrapRewriteNode(node) {
   return node;
 }
 
-function isWildcard(name) {
-  return /\b[a-z]\b/g.test(name);
+function isWildcard(node) {
+  return node.type == "Identifier" && /\b[a-z]\b/g.test(node.name);
 }
 
 function partial(wildcards, patterns, nodes) {
@@ -57,7 +61,7 @@ function match(wildcards, pattern, node) {
     return false;
   }
 
-  if (wildcards != null && pattern.type == 'Identifier' && isWildcard(pattern.name)) {
+  if (wildcards != null && isWildcard(pattern)) {
     if (pattern.name in wildcards) {
       return match(null, wildcards[pattern.name], node);
     }
@@ -164,7 +168,7 @@ function match(wildcards, pattern, node) {
 function replaceWildcards(wildcards, replacement) {
   switch (replacement.type) {
     case 'Identifier':
-      if (wildcards != null && isWildcard(replacement.name)) {
+      if (wildcards != null && isWildcard(replacement)) {
         if (replacement.name in wildcards) {
           replacement = wildcards[replacement.name];
         }
@@ -266,7 +270,7 @@ exports.rewrite = function(js, rewriteRule) {
   return falafel(js, parseOptions, function(node) {
     var wildcards = {};
     if (match(wildcards, pattern, node)) {
-      node.update(escodegen.generate(replaceWildcards(wildcards, _.clone(replacement))));
+      node.update(escodegen.generate(replaceWildcards(wildcards, clone(replacement))));
     }
   });
 }
