@@ -52,7 +52,7 @@ API
 
 Searching:
 
-```lang=javascript
+```javascript
 var jsfmt = require('jsfmt');
 var fs = require('fs');
 
@@ -65,7 +65,7 @@ jsfmt.search(js, "R.Component.create(a, { dependencies: z })").forEach(function(
 
 Rewriting:
 
-```lang=javascript
+```javascript
 var jsfmt = require('jsfmt');
 var fs = require('fs');
 
@@ -79,13 +79,13 @@ Examples
 
 Rewrite occurences of `_.reduce` to use native reduce:
 
-```lang=bash
+```bash
 jsfmt --rewrite "_.reduce(a, b, c) -> a.reduce(b, c)" examples/reduce.js
 ```
 
 Before:
 
-```lang=javascript
+```javascript
 var values = [1, 2, 3, 4];
 _.reduce(values, function(sum, value) {
   return sum + value;
@@ -94,7 +94,7 @@ _.reduce(values, function(sum, value) {
 
 After:
 
-```lang=javascript
+```javascript
 var values = [1, 2, 3, 4];
 values.reduce(function(sum, value) {
   return sum + value;
