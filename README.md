@@ -43,6 +43,37 @@ The rewrite rule allows rewriting portions of the javascript's AST before format
 
 Both `pattern` and `replacement` must be valid javascript. In `pattern`, single-character lowercase identifiers serve as wildcards matching arbitrary expressions; those expressions will be substituted for the same identifiers in the `replacement`.
 
+### Searching
+
+The search rule is very similar but just outputs expressions that match the given search expression.
+
+API
+---
+
+Searching:
+
+```lang=javascript
+var jsfmt = require('jsfmt');
+var fs = require('fs');
+
+var js = fs.readFileSync('my_file.js');
+
+jsfmt.search(js, "R.Component.create(a, { dependencies: z })").forEach(function(matches, wildcards) {
+  console.log(wildcards.z);
+});
+```
+
+Rewriting:
+
+```lang=javascript
+var jsfmt = require('jsfmt');
+var fs = require('fs');
+
+var js = fs.readFileSync('my_file.js');
+
+js = jsfmt.rewrite(js, "_.each(a, b) -> a.forEach(b)");
+```
+
 Examples
 ---
 
