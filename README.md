@@ -1,7 +1,7 @@
 jsfmt
 ===
 
-`jsfmt` formats javascript and allows AST searching and rewriting. Analagous to [`gofmt`](http://golang.org/cmd/gofmt/).
+`jsfmt` formats javascript and allows AST searching and rewriting. Analogous to [`gofmt`](http://golang.org/cmd/gofmt/).
 
 Installation
 ---
