@@ -13,14 +13,15 @@ var tmp = require('tmp');
 tmp.setGracefulCleanup();
 
 var argv = require('minimist')(process.argv.slice(2), {
-  'string': ['rewrite', 'search'],
+  'string': ['rewrite', 'search', 'options'],
   'boolean': ['comments', 'diff', 'format', 'list', 'write'],
   'default': {
     comments: true,
     diff: false,
     format: false,
     list: false,
-    write: false
+    write: false,
+    options: null,
   },
   'alias': {
     comments: 'c',
@@ -29,7 +30,8 @@ var argv = require('minimist')(process.argv.slice(2), {
     list: 'l',
     rewrite: 'r',
     search: 's',
-    write: 'w'
+    write: 'w',
+    options: 'o',
   }
 });
 
@@ -47,6 +49,7 @@ if (argv.help || (!argv.format && !argv.search && !argv.rewrite)) {
   console.log('');
   console.log('\tConfig:');
   console.log('\t--comments=true, -c=true: include comments in result');
+  console.log('\t--options="options.json", -o "options.json": esformatter options to override when formatting');
   return;
 }
 
@@ -92,6 +95,13 @@ function handleJavascript(fullPath, original) {
       value: '  '
     }
   };
+
+  if(argv.options){
+    // replace '=' with '' in case we get -o="options.json"
+    var optionsPath = path.resolve(process.cwd(), argv.options.replace('=', ''));
+    var overridingOptions = require(optionsPath);
+    _.extend(formattingOptions, overridingOptions);
+  }
 
   var js = original;
   var relativePath = path.relative(process.cwd(), fullPath);
@@ -143,7 +153,7 @@ function handleJavascript(fullPath, original) {
   } else {
     // Print to stdout
     console.log(js);
-  } 
+  }
 }
 
 function handleDirectory(currentPath, callback) {

@@ -30,6 +30,7 @@ jsfmt [flags] [path ...]
 
   Config:
   --comments=true, -c=true: include comments in result
+  --options="options.json", -o "options.json": esformatter options to override when formatting
 ```
 
 At least one action is required. If no path is given it will read from `stdin`. A directory path will recurse over all *.js files in the directory.
