@@ -13,7 +13,7 @@ var tmp = require('tmp');
 tmp.setGracefulCleanup();
 
 var argv = require('minimist')(process.argv.slice(2), {
-  'string': ['rewrite', 'search', 'options'],
+  'string': ['rewrite', 'search'],
   'boolean': ['comments', 'diff', 'format', 'list', 'write'],
   'default': {
     comments: true,
@@ -21,7 +21,6 @@ var argv = require('minimist')(process.argv.slice(2), {
     format: false,
     list: false,
     write: false,
-    options: null,
   },
   'alias': {
     comments: 'c',
@@ -31,7 +30,6 @@ var argv = require('minimist')(process.argv.slice(2), {
     rewrite: 'r',
     search: 's',
     write: 'w',
-    options: 'o',
   }
 });
 
@@ -49,7 +47,6 @@ if (argv.help || (!argv.format && !argv.search && !argv.rewrite)) {
   console.log('');
   console.log('\tConfig:');
   console.log('\t--comments=true, -c=true: include comments in result');
-  console.log('\t--options="options.json", -o "options.json": esformatter options to override when formatting');
   return;
 }
 
@@ -89,19 +86,12 @@ function handleDiff(fullPath, originalJavascript, formattedJavascript) {
 }
 
 function handleJavascript(fullPath, original) {
-  var formattingOptions = {
+  var formattingOptions = require('rc')('jsfmt', {
     preset: 'default',
     indent: {
       value: '  '
     }
-  };
-
-  if(argv.options){
-    // replace '=' with '' in case we get -o="options.json"
-    var optionsPath = path.resolve(process.cwd(), argv.options.replace('=', ''));
-    var overridingOptions = require(optionsPath);
-    _.extend(formattingOptions, overridingOptions);
-  }
+  });
 
   var js = original;
   var relativePath = path.relative(process.cwd(), fullPath);
