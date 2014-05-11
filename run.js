@@ -131,8 +131,20 @@ function handleJavascript(fullPath, original) {
   }
 
   if (argv.format) {
+    var sheBang = null;
+    // esformatter doesn't like shebangs
+    // remove if one exists as the first line
+    if (js.indexOf('#!') === 0) {
+      var firstNewline = js.indexOf('\n');
+      sheBang = js.substring(0, firstNewline);
+      js = js.substring(firstNewline);
+    }
     try {
       js = esformatter.format(js, formattingOptions);
+      // if we had a shebang, add back in
+      if (sheBang !== null) {
+        js = sheBang + js;
+      }
     } catch (err) {
       console.error(relativePath, err);
       return;
