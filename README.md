@@ -34,6 +34,15 @@ jsfmt [flags] [path ...]
 
 At least one action is required. If no path is given it will read from `stdin`. A directory path will recurse over all *.js files in the directory.
 
+### .jsfmtrc
+
+Any of the [esformatter](https://github.com/millermedeiros/esformatter) formatting
+options can be overwritten via a `.jsfmtrc` file. The file is parsed using
+[rc](https://github.com/dominictarr/rc), which accepts either a `json` or `ini` formatted file.
+
+`jsfmt` will also attempt to pickup and use the configured `indent`
+variable from your `.jshintrc` configuration file, if present.
+
 Rewriting
 ---
 
