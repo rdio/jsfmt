@@ -6,6 +6,7 @@ var child_process = require('child_process');
 var esformatter = require('esformatter');
 var escodegen = require('escodegen');
 var _ = require('underscore');
+var rc = require('rc');
 
 var jsfmt = require('./index.js');
 
@@ -86,10 +87,16 @@ function handleDiff(fullPath, originalJavascript, formattedJavascript) {
 }
 
 function handleJavascript(fullPath, original) {
-  var formattingOptions = require('rc')('jsfmt', {
+  // attempt to pickup on indent level from existing .jshintrc file
+  var jshintSettings = rc('jshint', {
+    indent: 2,
+  });
+  var indentValue = new Array(parseInt(jshintSettings.indent) + 1).join(' ');
+
+  var formattingOptions = rc('jsfmt', {
     preset: 'default',
     indent: {
-      value: '  '
+      value: indentValue
     }
   });
 
