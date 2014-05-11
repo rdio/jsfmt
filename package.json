@@ -24,7 +24,8 @@
     "esprima": "*",
     "underscore": "*",
     "tmp": "*",
-    "minimist": "*"
+    "minimist": "*",
+    "rc": "*"
   },
   "repository": {
     "type": "git",
