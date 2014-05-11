@@ -6,6 +6,7 @@ var child_process = require('child_process');
 var esformatter = require('esformatter');
 var escodegen = require('escodegen');
 var _ = require('underscore');
+var rc = require('rc');
 
 var jsfmt = require('./index.js');
 
@@ -20,7 +21,7 @@ var argv = require('minimist')(process.argv.slice(2), {
     diff: false,
     format: false,
     list: false,
-    write: false
+    write: false,
   },
   'alias': {
     comments: 'c',
@@ -29,7 +30,7 @@ var argv = require('minimist')(process.argv.slice(2), {
     list: 'l',
     rewrite: 'r',
     search: 's',
-    write: 'w'
+    write: 'w',
   }
 });
 
@@ -86,12 +87,18 @@ function handleDiff(fullPath, originalJavascript, formattedJavascript) {
 }
 
 function handleJavascript(fullPath, original) {
-  var formattingOptions = {
+  // attempt to pickup on indent level from existing .jshintrc file
+  var jshintSettings = rc('jshint', {
+    indent: 2,
+  });
+  var indentValue = new Array(parseInt(jshintSettings.indent) + 1).join(' ');
+
+  var formattingOptions = rc('jsfmt', {
     preset: 'default',
     indent: {
-      value: '  '
+      value: indentValue
     }
-  };
+  });
 
   var js = original;
   var relativePath = path.relative(process.cwd(), fullPath);
@@ -143,7 +150,7 @@ function handleJavascript(fullPath, original) {
   } else {
     // Print to stdout
     console.log(js);
-  } 
+  }
 }
 
 function handleDirectory(currentPath, callback) {
