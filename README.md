@@ -40,6 +40,9 @@ Any of the [esformatter](https://github.com/millermedeiros/esformatter) formatti
 options can be overwritten via a `.jsfmtrc` file. The file is parsed using
 [rc](https://github.com/dominictarr/rc), which accepts either a `json` or `ini` formatted file.
 
+`jsfmt` will also attempt to pickup and use the configured `indent`
+variable from your `.jshintrc` configuration file, if present.
+
 Rewriting
 ---
 
