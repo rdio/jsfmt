@@ -19,7 +19,7 @@ var argv = require('minimist')(process.argv.slice(2), {
   'default': {
     comments: true,
     diff: false,
-    format: false,
+    format: true,
     list: false,
     write: false,
   },
@@ -53,7 +53,7 @@ if (argv.help || (!argv.format && !argv.search && !argv.rewrite)) {
 
 function diff(pathA, pathB, callback) {
   child_process.exec([
-    'git', 'diff', '--ignore-space-at-eol', '-b', '--no-index', '--', pathA, pathB
+    'git', 'diff', '--ignore-space-at-eol', '--no-index', '--', pathA, pathB
   ].join(' '), callback);
 }
 

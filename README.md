@@ -110,6 +110,20 @@ values.reduce(function(sum, value) {
 }, 0);
 ```
 
+Changelog
+---
+
+### v0.2.0
+
+- Add [rc](https://github.com/dominictarr/rc) and `--config config.json` support for formatting configuration
+- Making `--format` the default action
+- Fix support for shebang at the top of js files, e.g. `#!/usr/bin/env node`
+- Fix jsfmt diff mode where whitespace was unaccounted for due to `-b` git diff option
+
+### v0.1.1
+
+- Initial release
+
 License
 ---
 
