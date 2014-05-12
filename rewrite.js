@@ -84,13 +84,13 @@ function match(wildcards, pattern, node) {
         return false;
       }
       return match(wildcards, pattern.key, node.key)
-          && match(wildcards, pattern.value, node.value);
+      && match(wildcards, pattern.value, node.value);
     case 'MemberExpression':
       if (pattern.computed != node.computed) {
         return false;
       }
       return match(wildcards, pattern.object, node.object)
-          && match(wildcards, pattern.property, node.property);
+      && match(wildcards, pattern.property, node.property);
     case 'ArrayExpression':
       return partial(wildcards, pattern.elements, node.elements);
     case 'ObjectExpression':
@@ -100,12 +100,12 @@ function match(wildcards, pattern, node) {
         return false;
       }
       return match(wildcards, pattern.left, node.left)
-          && match(wildcards, pattern.right, node.right);
+      && match(wildcards, pattern.right, node.right);
     case 'ForStatement':
       return match(wildcards, pattern.init, node.init)
-          && match(wildcards, pattern.test, node.test)
-          && match(wildcards, pattern.update, node.update)
-          && match(wildcards, pattern.body, node.body);
+      && match(wildcards, pattern.test, node.test)
+      && match(wildcards, pattern.update, node.update)
+      && match(wildcards, pattern.body, node.body);
     case 'VariableDeclaration':
       if (pattern.kind != node.kind) {
         return false;
@@ -144,7 +144,7 @@ function match(wildcards, pattern, node) {
       return match(wildcards, pattern.argument, node.argument);
     case 'VariableDeclarator':
       return match(wildcards, pattern.id, node.id)
-          && match(wildcards, pattern.init, node.init);
+      && match(wildcards, pattern.init, node.init);
     case 'Literal':
       return pattern.raw == node.raw;
     case 'ExpressionStatement':
@@ -263,7 +263,9 @@ exports.rewrite = function(js, rewriteRule) {
     return js;
   }
 
-  var parseOptions = { raw: true };
+  var parseOptions = {
+    raw: true
+  };
   var pattern = unwrapRewriteNode(esprima.parse(rewriteRuleParts[0], parseOptions));
   var replacement = unwrapRewriteNode(esprima.parse(rewriteRuleParts[1], parseOptions));
 
@@ -276,13 +278,21 @@ exports.rewrite = function(js, rewriteRule) {
 }
 
 exports.search = function(js, searchRule) {
-  var pattern = unwrapRewriteNode(esprima.parse(searchRule, { raw: true }));
+  var pattern = unwrapRewriteNode(esprima.parse(searchRule, {
+    raw: true
+  }));
 
   var matches = [];
-  falafel(js, { raw: true, loc: true }, function(node) {
+  falafel(js, {
+    raw: true,
+    loc: true
+  }, function(node) {
     var wildcards = {};
     if (match(wildcards, pattern, node)) {
-      matches.push({ node: node, wildcards: wildcards })
+      matches.push({
+        node: node,
+        wildcards: wildcards
+      })
     }
   });
   return matches;
