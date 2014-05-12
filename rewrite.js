@@ -263,7 +263,9 @@ exports.rewrite = function(js, rewriteRule) {
     return js;
   }
 
-  var parseOptions = { raw: true };
+  var parseOptions = {
+    raw: true
+  };
   var pattern = unwrapRewriteNode(esprima.parse(rewriteRuleParts[0], parseOptions));
   var replacement = unwrapRewriteNode(esprima.parse(rewriteRuleParts[1], parseOptions));
 
@@ -276,13 +278,21 @@ exports.rewrite = function(js, rewriteRule) {
 }
 
 exports.search = function(js, searchRule) {
-  var pattern = unwrapRewriteNode(esprima.parse(searchRule, { raw: true }));
+  var pattern = unwrapRewriteNode(esprima.parse(searchRule, {
+    raw: true
+  }));
 
   var matches = [];
-  falafel(js, { raw: true, loc: true }, function(node) {
+  falafel(js, {
+    raw: true,
+    loc: true
+  }, function(node) {
     var wildcards = {};
     if (match(wildcards, pattern, node)) {
-      matches.push({ node: node, wildcards: wildcards })
+      matches.push({
+        node: node,
+        wildcards: wildcards
+      })
     }
   });
   return matches;
