@@ -3,6 +3,7 @@ var util = require('util');
 var path = require('path');
 var child_process = require('child_process');
 
+var docopt = require('docopt');
 var esformatter = require('esformatter');
 var escodegen = require('escodegen');
 var _ = require('underscore');
@@ -13,43 +14,23 @@ var jsfmt = require('./index.js');
 var tmp = require('tmp');
 tmp.setGracefulCleanup();
 
-var argv = require('minimist')(process.argv.slice(2), {
-  'string': ['rewrite', 'search'],
-  'boolean': ['comments', 'diff', 'format', 'list', 'write'],
-  'default': {
-    comments: true,
-    diff: false,
-    format: false,
-    list: false,
-    write: false,
-  },
-  'alias': {
-    comments: 'c',
-    diff: 'd',
-    format: 'f',
-    list: 'l',
-    rewrite: 'r',
-    search: 's',
-    write: 'w',
-  }
-});
+var doc = [
+  'Usage:',
+  '  jsfmt [--no-format] [--diff|--list] [--write] [--rewrite PATTERN|--search PATTERN] <file>...',
+  '  jsfmt (--version | --help)',
+  '',
+  'Options:',
+  '  -h --help                      Show this help text',
+  '  -v --version                   Show jsfmt version',
+  '  -d --diff                      Show diff against original file',
+  '  -l --list                      List the files which differ from jsfmt output',
+  '  -f --no-format                 Do not format the input file(s)',
+  '  -w --write                     Overwrite the original file with jsfmt output',
+  '  -r=PATTERN --rewrite PATTERN   Rewrite rule (e.g., \'a.slice(b, len(a) -> a.slice(b)\')',
+  '  -s=PATTERN --search PATTERN    Search rule (e.g., \'a.slice\')',
+].join("\r\n");
 
-if (argv.help || (!argv.format && !argv.search && !argv.rewrite)) {
-  console.log('jsfmt [flags] [path ...]');
-  console.log('\tAction:');
-  console.log('\t--format=false, -f=false: format the input javascript');
-  console.log('\t--search="", -s="": search rule (e.g., \'a.slice\')');
-  console.log('\t--rewrite="", -r="": rewrite rule (e.g., \'a.slice(b, len(a) -> a.slice(b)\')');
-  console.log('');
-  console.log('\tOutput (default is stdout):');
-  console.log("\t--list=false, -l=false: list files whose formatting differs from jsfmt's");
-  console.log('\t--diff=false, -d=false: display diffs instead of rewriting files');
-  console.log('\t--write=false, -w=false: write result to (source) file instead of stdout');
-  console.log('');
-  console.log('\tConfig:');
-  console.log('\t--comments=true, -c=true: include comments in result');
-  return;
-}
+var argv = docopt.docopt(doc, {help: true, version: 'jsfmt 0.1.1'});
 
 function diff(pathA, pathB, callback) {
   child_process.exec([
@@ -112,9 +93,9 @@ function handleJavascript(fullPath, original) {
     js = js.substring(firstNewline);
   }
 
-  if (argv.search) {
+  if (argv['--search']) {
     try {
-      jsfmt.search(js, argv.search).forEach(function(match) {
+      jsfmt.search(js, argv['--search']).forEach(function(match) {
         var node = match.node;
         var loc = node.loc;
         var startLine = loc.start.line;
@@ -130,16 +111,16 @@ function handleJavascript(fullPath, original) {
     return;
   }
 
-  if (argv.rewrite) {
+  if (argv['--rewrite']) {
     try {
-      js = jsfmt.rewrite(js, argv.rewrite).toString();
+      js = jsfmt.rewrite(js, argv['--rewrite']).toString();
     } catch (err) {
       console.error(relativePath, err);
       return;
     }
   }
 
-  if (argv.format) {
+  if (!argv['--no-format']) {
     try {
       js = esformatter.format(js, formattingOptions);
     } catch (err) {
@@ -153,12 +134,12 @@ function handleJavascript(fullPath, original) {
     js = sheBang + js;
   }
 
-  if (argv.diff) {
+  if (argv['--diff']) {
     handleDiff(fullPath, original, js)
-  } else if (argv.list && original != js) {
+  } else if (argv['--list'] && original != js) {
     // Print filenames who differ
     console.log(relativePath);
-  } else if (argv.write) {
+  } else if (argv['--write']) {
     // Overwrite original file
     fs.writeFileSync(fullPath, js);
   } else {
@@ -176,7 +157,7 @@ function handleDirectory(currentPath, callback) {
   });
 }
 
-var paths = argv._;
+var paths = argv['<file>'];
 
 if (paths.length > 0) {
   paths.forEach(function(currentPath) {
