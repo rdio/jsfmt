@@ -30,7 +30,10 @@ var doc = [
   '  -s=PATTERN --search PATTERN    Search rule (e.g., \'a.slice\')',
 ].join("\r\n");
 
-var argv = docopt.docopt(doc, {help: true, version: 'jsfmt 0.1.1'});
+var argv = docopt.docopt(doc, {
+  help: true,
+  version: 'jsfmt 0.1.1'
+});
 
 function diff(pathA, pathB, callback) {
   child_process.exec([
@@ -41,11 +44,13 @@ function diff(pathA, pathB, callback) {
 function handleDiff(fullPath, originalJavascript, formattedJavascript) {
   if (fullPath == 'stdin') {
     tmp.file(function(err, pathA, fdA) {
-      if (err) throw err;
+      if (err)
+        throw err;
       fs.writeSync(fdA, originalJavascript);
 
       tmp.file(function(err, pathB, fdB) {
-        if (err) throw err;
+        if (err)
+          throw err;
         fs.writeSync(fdB, formattedJavascript);
 
         diff(pathA, pathB, function(err, stdout, stderr) {
@@ -56,7 +61,8 @@ function handleDiff(fullPath, originalJavascript, formattedJavascript) {
     });
   } else {
     tmp.file(function(err, pathA, fdA) {
-      if (err) throw err;
+      if (err)
+        throw err;
       fs.writeSync(fdA, formattedJavascript);
 
       diff(fullPath, pathA, function(err, stdout, stderr) {
