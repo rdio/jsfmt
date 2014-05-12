@@ -84,13 +84,13 @@ function match(wildcards, pattern, node) {
         return false;
       }
       return match(wildcards, pattern.key, node.key)
-          && match(wildcards, pattern.value, node.value);
+      && match(wildcards, pattern.value, node.value);
     case 'MemberExpression':
       if (pattern.computed != node.computed) {
         return false;
       }
       return match(wildcards, pattern.object, node.object)
-          && match(wildcards, pattern.property, node.property);
+      && match(wildcards, pattern.property, node.property);
     case 'ArrayExpression':
       return partial(wildcards, pattern.elements, node.elements);
     case 'ObjectExpression':
@@ -100,12 +100,12 @@ function match(wildcards, pattern, node) {
         return false;
       }
       return match(wildcards, pattern.left, node.left)
-          && match(wildcards, pattern.right, node.right);
+      && match(wildcards, pattern.right, node.right);
     case 'ForStatement':
       return match(wildcards, pattern.init, node.init)
-          && match(wildcards, pattern.test, node.test)
-          && match(wildcards, pattern.update, node.update)
-          && match(wildcards, pattern.body, node.body);
+      && match(wildcards, pattern.test, node.test)
+      && match(wildcards, pattern.update, node.update)
+      && match(wildcards, pattern.body, node.body);
     case 'VariableDeclaration':
       if (pattern.kind != node.kind) {
         return false;
@@ -144,7 +144,7 @@ function match(wildcards, pattern, node) {
       return match(wildcards, pattern.argument, node.argument);
     case 'VariableDeclarator':
       return match(wildcards, pattern.id, node.id)
-          && match(wildcards, pattern.init, node.init);
+      && match(wildcards, pattern.init, node.init);
     case 'Literal':
       return pattern.raw == node.raw;
     case 'ExpressionStatement':
