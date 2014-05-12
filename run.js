@@ -106,6 +106,15 @@ function handleJavascript(fullPath, original) {
   var js = original;
   var relativePath = path.relative(process.cwd(), fullPath);
 
+  var sheBang = null;
+  // esformatter doesn't like shebangs
+  // remove if one exists as the first line
+  if (js.indexOf('#!') === 0) {
+    var firstNewline = js.indexOf('\n');
+    sheBang = js.substring(0, firstNewline);
+    js = js.substring(firstNewline);
+  }
+
   if (argv.search) {
     try {
       jsfmt.search(js, argv.search).forEach(function(match) {
@@ -134,24 +143,17 @@ function handleJavascript(fullPath, original) {
   }
 
   if (argv.format) {
-    var sheBang = null;
-    // esformatter doesn't like shebangs
-    // remove if one exists as the first line
-    if (js.indexOf('#!') === 0) {
-      var firstNewline = js.indexOf('\n');
-      sheBang = js.substring(0, firstNewline);
-      js = js.substring(firstNewline);
-    }
     try {
       js = esformatter.format(js, formattingOptions);
-      // if we had a shebang, add back in
-      if (sheBang !== null) {
-        js = sheBang + js;
-      }
     } catch (err) {
       console.error(relativePath, err);
       return;
     }
+  }
+
+  // if we had a shebang, add back in
+  if (sheBang !== null) {
+    js = sheBang + js;
   }
 
   if (argv.diff) {
