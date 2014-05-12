@@ -60,11 +60,13 @@ function diff(pathA, pathB, callback) {
 function handleDiff(fullPath, originalJavascript, formattedJavascript) {
   if (fullPath == 'stdin') {
     tmp.file(function(err, pathA, fdA) {
-      if (err) throw err;
+      if (err)
+        throw err;
       fs.writeSync(fdA, originalJavascript);
 
       tmp.file(function(err, pathB, fdB) {
-        if (err) throw err;
+        if (err)
+          throw err;
         fs.writeSync(fdB, formattedJavascript);
 
         diff(pathA, pathB, function(err, stdout, stderr) {
@@ -75,7 +77,8 @@ function handleDiff(fullPath, originalJavascript, formattedJavascript) {
     });
   } else {
     tmp.file(function(err, pathA, fdA) {
-      if (err) throw err;
+      if (err)
+        throw err;
       fs.writeSync(fdA, formattedJavascript);
 
       diff(fullPath, pathA, function(err, stdout, stderr) {
