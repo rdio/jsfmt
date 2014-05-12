@@ -48,7 +48,7 @@ if (argv.help || (!argv.format && !argv.search && !argv.rewrite)) {
   console.log('');
   console.log('\tConfig:');
   console.log('\t--comments=true, -c=true: include comments in result');
-  return;
+  process.exit();
 }
 
 function diff(pathA, pathB, callback) {
