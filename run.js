@@ -16,7 +16,7 @@ tmp.setGracefulCleanup();
 
 var doc = [
   'Usage:',
-  '  jsfmt [--no-format] [--diff|--list] [--write] [--rewrite PATTERN|--search PATTERN] <file>...',
+  '  jsfmt [--no-format] [--diff|--list|--write] [--rewrite PATTERN|--search PATTERN] <file>...',
   '  jsfmt (--version | --help)',
   '',
   'Options:',
