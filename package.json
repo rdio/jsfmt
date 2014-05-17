@@ -11,7 +11,7 @@
     "jsfmt": "./bin/jsfmt"
   },
   "scripts": {
-    "test": "mocha test.js"
+    "test": "mocha test/*.js -R spec"
   },
   "maintainers": [
     {
