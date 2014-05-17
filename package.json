@@ -10,6 +10,9 @@
   "bin": {
     "jsfmt": "./bin/jsfmt"
   },
+  "scripts": {
+    "test": "mocha test.js"
+  },
   "maintainers": [
     {
       "name": "Jim Fleming",
@@ -47,5 +50,9 @@
     "rewrite",
     "syntax",
     "format"
-  ]
+  ],
+  "devDependencies": {
+    "mocha": "^1.18.2",
+    "should": "^3.3.1"
+  }
 }
