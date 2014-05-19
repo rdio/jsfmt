@@ -3,7 +3,7 @@
   "description": "gofmt for javascript",
   "version": "0.2.0",
   "homepage": "https://github.com/rdio/jsfmt",
-  "main": "index.js",
+  "main": "./lib/index.js",
   "engines": {
     "node": ">=0.4.0"
   },
@@ -16,7 +16,6 @@
   "files": [
       "bin",
       "lib",
-      "index.js",
       "LICENSE.MD"
   ],
   "maintainers": [
