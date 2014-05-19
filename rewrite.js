@@ -11,8 +11,6 @@ function clone(obj) {
 function unwrapRewriteNode(node) {
   if (node.type == 'Program' && node.body.length > 0) {
     node = unwrapRewriteNode(node.body[0]);
-  } else if (node.type == 'ExpressionStatement') {
-    node = unwrapRewriteNode(node.expression);
   }
   return node;
 }
@@ -134,6 +132,29 @@ function match(wildcards, pattern, node) {
         return false;
       }
       return true;
+    case 'FunctionDeclaration':
+      if (!match(wildcards, pattern.id, node.id)) {
+        return false;
+      }
+      if (pattern.rest != node.rest) {
+        return false;
+      }
+      if (pattern.generator != node.generator) {
+        return false;
+      }
+      if (pattern.expression != node.expression) {
+        return false;
+      }
+      if (!partial(wildcards, pattern.params, node.params)) {
+        return false;
+      }
+      if (!partial(wildcards, pattern.defaults, node.defaults)) {
+        return false;
+      }
+      if (!match(wildcards, pattern.body, node.body)) {
+        return false;
+      }
+      return true;
     case 'UpdateExpression':
       if (pattern.operator != node.operator) {
         return false;
@@ -198,6 +219,19 @@ function replaceWildcards(wildcards, replacement) {
       replacement.body = replaceWildcards(wildcards, replacement.body);
       for (var i = 0; i < replacement.params.length; i++) {
         replacement.params[i] = replaceWildcards(wildcards, replacement.params[i]);
+      }
+      for (var i = 0; i < replacement.defaults.length; i++) {
+        replacement.defaults[i] = replaceWildcards(wildcards, replacement.defaults[i]);
+      }
+      break;
+    case 'FunctionDeclaration':
+      replacement.id = replaceWildcards(wildcards, replacement.id);
+      replacement.body = replaceWildcards(wildcards, replacement.body);
+      for (var i = 0; i < replacement.params.length; i++) {
+        replacement.params[i] = replaceWildcards(wildcards, replacement.params[i]);
+      }
+      for (var i = 0; i < replacement.defaults.length; i++) {
+        replacement.defaults[i] = replaceWildcards(wildcards, replacement.defaults[i]);
       }
       break;
     case 'Property':
