@@ -3,7 +3,7 @@
 'use strict';
 var should = require('should');
 var fs = require('fs');
-var jsfmt = require('../index');
+var jsfmt = require('../lib/index');
 
 describe('jsfmt', function() {
   it('should test basic rewrite', function() {
