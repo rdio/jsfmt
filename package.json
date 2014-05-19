@@ -3,7 +3,7 @@
   "description": "gofmt for javascript",
   "version": "0.2.0",
   "homepage": "https://github.com/rdio/jsfmt",
-  "main": "index.js",
+  "main": "./lib/index.js",
   "engines": {
     "node": ">=0.4.0"
   },
@@ -11,8 +11,13 @@
     "jsfmt": "./bin/jsfmt"
   },
   "scripts": {
-    "test": "mocha test/*.js -R spec"
+    "test": "mocha tests/*.js -R spec"
   },
+  "files": [
+      "bin",
+      "lib",
+      "LICENSE.MD"
+  ],
   "maintainers": [
     {
       "name": "Jim Fleming",
