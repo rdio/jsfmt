@@ -11,8 +11,14 @@
     "jsfmt": "./bin/jsfmt"
   },
   "scripts": {
-    "test": "mocha test/*.js -R spec"
+    "test": "mocha tests/*.js -R spec"
   },
+  "files": [
+      "bin",
+      "lib",
+      "index.js",
+      "LICENSE.MD"
+  ],
   "maintainers": [
     {
       "name": "Jim Fleming",
