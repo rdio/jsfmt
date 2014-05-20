@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+	<link rel="stylesheet" href="stylesheets/bootstrap.min.css" type="text/css" media="screen" charset="utf-8">
+	<link rel="stylesheet" href="stylesheets/bootstrap-theme.min.css" type="text/css" media="screen" charset="utf-8">
+	<link rel="stylesheet" href="stylesheets/syntax.css" type="text/css" media="screen" charset="utf-8">
+	<link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic|Vollkorn:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+
+	<script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+
+	<style type="text/css" media="screen">
+		.hljs {
+			display: block;
+		}
+
+		.container {
+			max-width: 960px;
+		}
+		.center {
+			margin-left: auto;
+			margin-right: auto;
+			text-align: center;
+		}
+
+		.title {
+			font-family: 'Lorra', serif;
+			font-weight: 700;
+			font-style: italic;
+			font-size: 7em;
+			margin-top: 50px;
+		}
+
+		.subtitle {
+			color: #666;
+			font-weight: 400;
+			font-size: 1.8em;
+			margin-top: 40px;
+		}
+
+		hr.divider {
+			margin: 30px auto;
+			width: 100%;
+			max-width: 400px;
+		}
+	</style>
+</head>
+<body>
+
+	<!-- Introductory Github page for jsfmt
+
+	Three main features:
+
+	Formatting
+	Search
+	Replace
+
+	"Show don't tell" -->
+
+	<!-- hi there I'm jsfmt -->
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="heading">
+					<h1 class="title center">jsfmt</h1>
+					<h2 class="subtitle center">Like <em><code>gofmt</code></em>, but for javascript</h2>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<hr class="divider">
+		</div>
+	</div>
+	<!-- here's what I do -->
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h4>Formatting</h4>
+				<pre>
+					<code>
+# Format your code and write it to disk
+jsfmt -w=true source.js
+
+# View a diff of all formatting changes without writing them
+jsfmt -d=true source.js
+
+# List all files that need formatting in the `src/` directory
+jsfmt -l=true -w=false src/
+					</code>
+				</pre>
+			</div>
+			<div class="col-md-12">
+				<h4>Searching</h4>
+				<pre>
+					<code>
+var jsfmt = require('jsfmt');
+var fs = require('fs');
+
+var js = fs.readFileSync('my_file.js');
+
+jsfmt.search(js, "R.Component.create(a, { dependencies: z })").forEach(function(matches, wildcards) {
+  console.log(wildcards.z);
+});
+					</code>
+				</pre>
+			</div>
+			<div class="col-md-12">
+				<h4>Replacing</h4>
+				<pre>
+					<code>
+var jsfmt = require('jsfmt');
+var fs = require('fs');
+
+var js = fs.readFileSync('my_file.js');
+
+js = jsfmt.rewrite(js, "_.each(a, b) -> a.forEach(b)");
+					</code>
+				</pre>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
