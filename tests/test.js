@@ -21,4 +21,9 @@ describe('jsfmt', function() {
         results[0].wildcards.a.name.should.eql('param1');
         results[0].wildcards.b.name.should.eql('done');
     });
+    it('should test basic formatting', function() {
+        var js = 'var func = function(test){console.log( test );};';
+        var result = jsfmt.format(js, {});
+        result.should.eql('var func = function(test) {\n  console.log(test);\n};');
+    });
 });
