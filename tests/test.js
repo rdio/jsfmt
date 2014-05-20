@@ -23,12 +23,20 @@ describe('jsfmt', function() {
     results[0].wildcards.b.name.should.eql('done');
   });
 
-  it('should be able to rewrite variable declaration', function() {
-    jsfmt.rewrite('var a = 1, c = 2;', 'noop -> noop')
-      .toString().should.eql('var a = 1, c = 2;');
+  it('should be able to match variable declaration', function() {
+    var results = jsfmt.search('var myA = 1; var myB = 2;', 'var a = b; var c = d;');
+    results[0].wildcards.a.name.should.eql('myA');
+    results[0].wildcards.b.value.should.eql('1');
+    results[0].wildcards.c.name.should.eql('myB');
+    results[0].wildcards.d.value.should.eql('2');
+  });
 
-    jsfmt.rewrite('var a = 1, c = 2;', 'var a = b, c = d; -> var a = b; var c = d;')
-      .toString().should.eql('var a = b; var c = d;');
+  it('should be able to rewrite variable declaration', function() {
+    jsfmt.rewrite('var myA = 1, myB = 2;', 'noop -> noop')
+      .toString().should.eql('var myA = 1, myB = 2;');
+
+    jsfmt.rewrite('var myA = 1, myB = 2;', 'var a = c, b = d; -> var a = c; var b = d;')
+      .toString().should.eql('var myA = 1;\nvar myB = 2;');
   });
 
   it('should be able to rewrite FunctionDeclaration', function() {
