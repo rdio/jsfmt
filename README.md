@@ -29,9 +29,6 @@ jsfmt [flags] [path ...]
   --list=false, -l=false: list files whose formatting differs from jsfmt's
   --diff=false, -d=false: display diffs instead of rewriting files
   --write=false, -w=false: write result to (source) file instead of stdout
-
-  Config:
-  --comments=true, -c=true: include comments in result
 ```
 
 At least one action is required. If no path is given it will read from `stdin`. A directory path will recurse over all *.js files in the directory.
