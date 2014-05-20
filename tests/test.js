@@ -43,4 +43,10 @@ describe('jsfmt', function() {
     jsfmt.rewrite('function myFunc() { return false; }', 'function a() {} -> function wrapper(a) {}')
       .toString().should.eql('function wrapper(myFunc) {\n}');
   });
+
+  it('should test basic formatting', function() {
+    var js = 'var func = function(test){console.log( test );};';
+    var result = jsfmt.format(js, {});
+    result.should.eql('var func = function(test) {\n  console.log(test);\n};');
+  });
 });
