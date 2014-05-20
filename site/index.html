@@ -7,18 +7,18 @@
 	<link rel="stylesheet" href="stylesheets/bootstrap.min.css" type="text/css" media="screen" charset="utf-8">
 	<link rel="stylesheet" href="stylesheets/bootstrap-theme.min.css" type="text/css" media="screen" charset="utf-8">
 	<link rel="stylesheet" href="stylesheets/syntax.css" type="text/css" media="screen" charset="utf-8">
-	<link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic|Vollkorn:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+	<link href="http://fonts.googleapis.com/css?family=Lora:700italic" rel='stylesheet' type='text/css'>
 
 	<script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script>
 	<script>hljs.initHighlightingOnLoad();</script>
 
 	<style type="text/css" media="screen">
-		.hljs {
-			display: block;
+		code {
+			overflow: auto;
 		}
 
 		.container {
-			max-width: 960px;
+			max-width: 900px;
 		}
 		.center {
 			margin-left: auto;
@@ -31,7 +31,8 @@
 			font-weight: 700;
 			font-style: italic;
 			font-size: 7em;
-			margin-top: 50px;
+			margin-top: 80px;
+
 		}
 
 		.subtitle {
@@ -39,6 +40,7 @@
 			font-weight: 400;
 			font-size: 1.8em;
 			margin-top: 40px;
+			margin-bottom: 30px;
 		}
 
 		hr.divider {
@@ -66,59 +68,61 @@
 			<div class="col-xs-12">
 				<div class="heading">
 					<h1 class="title center">jsfmt</h1>
-					<h2 class="subtitle center">Like <em><code>gofmt</code></em>, but for javascript</h2>
+					<h2 class="subtitle center">Jsfmt formats, searches, and rewrites javascript.</h2>
 				</div>
+			</div>
+
+			<div class="col-xs-12">
+				<hr class="divider">
 			</div>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-xs-12">
-			<hr class="divider">
-		</div>
-	</div>
+
 	<!-- here's what I do -->
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<h4>Formatting</h4>
+				<h3>Formatting</h3>
 				<pre>
 					<code>
-# Format your code and write it to disk
+# Format `source.js` and print it to stdout.
+jsfmt source.js
+
+# Format `source.js` and write it to disk.
 jsfmt -w=true source.js
 
-# View a diff of all formatting changes without writing them
+# View a diff of all formatting changes in `source.js` without writing them.
 jsfmt -d=true source.js
 
-# List all files that need formatting in the `src/` directory
+# List all files that need formatting in the `src/` directory.
 jsfmt -l=true -w=false src/
 					</code>
 				</pre>
 			</div>
 			<div class="col-md-12">
-				<h4>Searching</h4>
+				<h3>Searching</h3>
 				<pre>
 					<code>
-var jsfmt = require('jsfmt');
-var fs = require('fs');
+# Find all instances of underscore.js's reduce in `source.js`. Note that spacing doesn't matter.
+jsfmt --search="_.reduce(a, b, c)"
 
-var js = fs.readFileSync('my_file.js');
-
-jsfmt.search(js, "R.Component.create(a, { dependencies: z })").forEach(function(matches, wildcards) {
-  console.log(wildcards.z);
-});
+# Find all calls to console.log() in your project's `src/` directory.
+jsfmt --search="console.log(s)"
 					</code>
 				</pre>
 			</div>
 			<div class="col-md-12">
-				<h4>Replacing</h4>
+				<h3>Replacing</h3>
 				<pre>
 					<code>
-var jsfmt = require('jsfmt');
-var fs = require('fs');
+# Replace underscore.js's reduce with the native reduce method in `source.js`.
+jsfmt --rewrite="_.reduce(a, b, c) -> a.reduce(b, c)" examples/reduce.js
 
-var js = fs.readFileSync('my_file.js');
+# Commit the above changes to disk
+jsfmt --write=true --rewrite="_.reduce(a, b, c) -> a.reduce(b, c)" examples/reduce.js
 
-js = jsfmt.rewrite(js, "_.each(a, b) -> a.forEach(b)");
+# Replace modulo with an expression that always returns a positive number, and run the results.
+jsfmt --rewrite="x % y -> ((x % y) + y) % y" source.js | node
 					</code>
 				</pre>
 			</div>
