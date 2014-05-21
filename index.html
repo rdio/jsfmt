@@ -1,12 +1,146 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+	<meta charset="UTF-8">
+	<title>Jsfmt - For formatting, searching, and rewriting javascript</title>
+	<!-- Site thrown together by github.com/bichiliad -->
 
-  <title>jsfmt</title>
-  <meta name="description" content="For formatting, searching, and rewriting javascript.">
+	<link href="http://fonts.googleapis.com/css?family=Lora:700italic" rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="stylesheets/bootstrap.min.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="stylesheets/syntax.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="stylesheets/main.css" type="text/css" media="screen">
+
+	<!-- Syntax highlighting -->
+	<script src="scripts/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
 </head>
 <body>
-  <h1>jsfmt</h1>
+
+	<div class="container">
+		<div class="row">
+
+			<!-- Hi there, I'm jsfmt -->
+			<div class="col-md-12">
+				<div class="heading">
+					<h1 class="title center">jsfmt</h1>
+					<h2 class="subtitle center">For formatting, searching, and rewriting javascript.</h2>
+				</div>
+
+				<!-- Installation / source / docs -->
+				<div class="center install">
+					<code>npm install -g jsfmt</code>
+					<h5 class="sourcedocs">
+						<a href="https://github.com/rdio/jsfmt">View the source</a>, or
+						<a href="https://github.com/rdio/jsfmt/blob/master/README.md">read the docs</a>
+					</h5>
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<hr class="divider">
+			</div>
+
+
+			<!-- Formatting -->
+			<div class="col-md-12">
+				<h3>Formatting <small>to help keep your code neat.</small></h3>
+				<pre>
+					<code>
+# Format `source.js` and print the results to stdout.
+jsfmt source.js
+
+# Format `source.js` and write the results to disk.
+jsfmt -w=true source.js
+
+# View a diff of all formatting changes in `source.js` without writing them.
+jsfmt -d=true source.js
+
+# List all files that need formatting in the `src/` directory.
+# Directories are recursively traversed.
+jsfmt -l=true -w=false src/
+					</code>
+				</pre>
+			</div>
+
+			<!-- Searching -->
+			<div class="col-md-12">
+				<h3>Searching <small>to smartly find patterns.</small></h3>
+				<pre>
+					<code>
+# Find all instances of _.reduce() in `source.js`.
+# Single letter identifiers act as wildcards, and whitespace is ignored.
+jsfmt --search="_.reduce(a, b, c)" source.js
+
+# Find all calls to console.log() in your project's `src/` directory.
+jsfmt --search="console.log(s)" src/
+					</code>
+				</pre>
+			</div>
+
+			<!-- Rewriting -->
+			<div class="col-md-12">
+				<h3>Rewriting <small>for easy cleaning and refactoring.</small></h3>
+				<pre>
+					<code>
+# Replace underscore.js's reduce with the native reduce method in `source.js`.
+jsfmt --rewrite="_.reduce(a, b, c) -> a.reduce(b, c)" source.js
+
+# Do it again, but this time save the changes to disk.
+jsfmt --write=true --rewrite="_.reduce(a, b, c) -> a.reduce(b, c)" source.js
+
+# Replace modulo with an expression that always returns a positive number, and run the results.
+jsfmt --rewrite="x % y -> ((x % y) + y) % y" source.js | node
+					</code>
+				</pre>
+			</div>
+
+			<div class="col-md-12">
+				<hr class="divider">
+			</div>
+
+
+			<!-- Extra things not mentioned above -->
+			<div class="col-md-4">
+				<h4 class="center">Intelligent </h4>
+				<p>
+					Built on <a href="http://esprima.org/">esprima</a> and
+					<a href="https://github.com/millermedeiros/esformatter">esformatter</a> for smart code parsing and formatting.
+					Jsfmt works on your code's <a href="http://en.wikipedia.org/wiki/Abstract_syntax_tree">AST</a>, not just on
+					its text.
+				</p>
+			</div>
+
+			<div class="col-md-4">
+				<h4 class="center">Full API</h4>
+				<p>
+					You can <code>require</code> jsfmt from any node app. Every feature available through the command line is also
+					available through its module. Check <a href="https://github.com/rdio/jsfmt">our docs</a> for more information.
+				</p>
+			</div>
+
+			<div class="col-md-4">
+				<h4 class="center">Active Development</h4>
+				<p>
+					Jsfmt is currently in development, and is constantly changing and improving.
+					Follow along <a href="https://github.com/rdio/jsfmt">on Github</a>, and feel free to report bugs
+					or request features <a href="https://github.com/rdio/jsfmt/issues?state=open">here.</a>
+				</p>
+			</div>
+
+			<div class="col-md-12">
+				<hr class="divider">
+			</div>
+
+			<!-- Footer -->
+			<div class="col-md-12">
+				<footer class="center">
+					<em>&copy; 2014 Rdio, Inc.
+					Licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License, Version 2.0</a></em>
+				</footer>
+			</div>
+
+		</div>
+	</div>
+
 </body>
 </html>

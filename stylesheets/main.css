@@ -1,0 +1,61 @@
+code {
+	overflow: auto;
+}
+
+.container {
+	max-width: 840px;
+}
+
+.install code {
+	font-style: italic;
+	font-size: 1.2em;
+}
+
+footer {
+	margin-top: 20px;
+	margin-bottom: 50px;
+}
+
+.center {
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+.title {
+	font-family: 'Lorra', serif;
+	color: #444;
+	font-weight: 700;
+	font-style: italic;
+	font-size: 8em;
+	margin-top: 80px;
+
+}
+
+.subtitle {
+	color: #666;
+	font-weight: 400;
+	font-size: 1.8em;
+	margin: 40px inherit;
+}
+
+hr.divider {
+	margin: 30px auto;
+	width: 100%;
+	max-width: 400px;
+}
+
+.install code {
+	display: block;
+	margin-bottom: 20px;
+	padding: 10px;
+	color: #ddd;
+	background-color: #444;
+}
+
+.sourcedocs {
+	font-style: italic;
+}
+.sourcedocs a {
+	color: #999
+}
