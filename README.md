@@ -19,19 +19,23 @@ Usage
 ---
 
 ```
-jsfmt [flags] [path ...]
-  Action:
-  --format=false, -f=false: format the input javascript
-  --search="", -s="": search rule (e.g., 'a.slice')
-  --rewrite="", -r="": rewrite rule (e.g., 'a.slice(b, len(a) -> a.slice(b)')
+$ jsfmt --help
+Usage:
+  jsfmt [--no-format] [--diff|--list|--write] [--rewrite PATTERN|--search PATTERN] [<file>...]
+  jsfmt (--version | --help)
 
-  Output (default is stdout):
-  --list=false, -l=false: list files whose formatting differs from jsfmt's
-  --diff=false, -d=false: display diffs instead of rewriting files
-  --write=false, -w=false: write result to (source) file instead of stdout
+Options:
+  -h --help                      Show this help text
+  -v --version                   Show jsfmt version
+  -d --diff                      Show diff against original file
+  -l --list                      List the files which differ from jsfmt output
+  --no-format                    Do not format the input file(s)
+  -w --write                     Overwrite the original file with jsfmt output
+  -r=PATTERN --rewrite PATTERN   Rewrite rule (e.g., 'a.slice(b, len(a) -> a.slice(b)')
+  -s=PATTERN --search PATTERN    Search rule (e.g., 'a.slice')
 ```
 
-At least one action is required. If no path is given it will read from `stdin`. A directory path will recurse over all *.js files in the directory.
+If no path is given it will read from `stdin`. A directory path will recurse over all *.js files in the directory.
 
 ### .jsfmtrc
 
