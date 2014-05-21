@@ -16,11 +16,18 @@ describe('jsfmt', function() {
     jsfmt.rewrite('_.reduce(a,b,c)', '_.reduce(a, b, c) -> a.reduce(b, c)')
       .toString().should.eql('a.reduce(b, c)');
   });
+
   it('should test basic searching', function() {
     var results = jsfmt.search('var param1 = 1, done= function(){}; _.each(param1, done);', '_.each(a, b);');
     results[0].wildcards.a.name.should.eql('param1');
     results[0].wildcards.b.name.should.eql('done');
   });
+
+  it('should be able to rewrite FunctionDeclaration', function() {
+    jsfmt.rewrite('function myFunc() { return false; }', 'function a() {} -> function wrapper(a) {}')
+      .toString().should.eql('function wrapper(myFunc) {\n}');
+  });
+
   it('should test basic formatting', function() {
     var js = 'var func = function(test){console.log( test );};';
     var result = jsfmt.format(js, {});
