@@ -1,6 +1,8 @@
 jsfmt
 ===
 
+[![Build Status](https://travis-ci.org/rdio/jsfmt.svg?branch=master)](https://travis-ci.org/rdio/jsfmt)
+
 `jsfmt` formats javascript and allows AST searching and rewriting. Analogous to [`gofmt`](http://golang.org/cmd/gofmt/).
 
 Installation
@@ -27,9 +29,6 @@ jsfmt [flags] [path ...]
   --list=false, -l=false: list files whose formatting differs from jsfmt's
   --diff=false, -d=false: display diffs instead of rewriting files
   --write=false, -w=false: write result to (source) file instead of stdout
-
-  Config:
-  --comments=true, -c=true: include comments in result
 ```
 
 At least one action is required. If no path is given it will read from `stdin`. A directory path will recurse over all *.js files in the directory.
@@ -110,19 +109,26 @@ values.reduce(function(sum, value) {
 }, 0);
 ```
 
-License
+Links
 ---
 
-    Copyright 2014 Rdio, Inc.
+- Atom Package - https://atom.io/packages/atom-jsfmt - "Automatically run jsfmt every time you save a javascript source file."
+- Grunt Task - https://github.com/james2doyle/grunt-jsfmt - "A task for the jsfmt library."
 
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
+Changelog
+---
 
-    http://www.apache.org/licenses/LICENSE-2.0
+### v0.2.0
 
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
+- Add [rc](https://github.com/dominictarr/rc) and `--config config.json` support for formatting configuration
+- Making `--format` the default action
+- Fix support for shebang at the top of js files, e.g. `#!/usr/bin/env node`
+- Fix jsfmt diff mode where whitespace was unaccounted for due to `-b` git diff option
+
+### v0.1.1
+
+- Initial release
+
+License
+---
+Apache License, Version 2.0. Copyright 2014 Rdio, Inc.
