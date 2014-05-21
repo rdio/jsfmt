@@ -24,9 +24,10 @@ footer {
 
 .title {
 	font-family: 'Lorra', serif;
+	color: #444;
 	font-weight: 700;
 	font-style: italic;
-	font-size: 7em;
+	font-size: 8em;
 	margin-top: 80px;
 
 }
@@ -35,8 +36,7 @@ footer {
 	color: #666;
 	font-weight: 400;
 	font-size: 1.8em;
-	margin-top: 40px;
-	margin-bottom: 30px;
+	margin: 40px inherit;
 }
 
 hr.divider {
@@ -45,8 +45,12 @@ hr.divider {
 	max-width: 400px;
 }
 
-.install pre {
-	height: 5em;
+.install code {
+	display: block;
+	margin-bottom: 20px;
+	padding: 10px;
+	color: #ddd;
+	background-color: #444;
 }
 
 .sourcedocs {

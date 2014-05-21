@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title>Jsfmt - For formatting, searching, and rewriting javascript</title>
 
 	<link href="http://fonts.googleapis.com/css?family=Lora:700italic" rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="stylesheets/bootstrap.min.css" type="text/css" media="screen" charset="utf-8">
 	<link rel="stylesheet" href="stylesheets/syntax.css" type="text/css" media="screen" charset="utf-8">
 	<link rel="stylesheet" href="stylesheets/main.css" type="text/css" media="screen" charset="utf-8">
 
+	<!-- Syntax highlighting -->
 	<script src="scripts/highlight.pack.js"></script>
 	<script>hljs.initHighlightingOnLoad();</script>
 </head>
@@ -21,15 +22,15 @@
 			<div class="col-md-12">
 				<div class="heading">
 					<h1 class="title center">jsfmt</h1>
-					<!-- <h2 class="subtitle center">Jsfmt formats, searches, and rewrites javascript.</h2> -->
 					<h2 class="subtitle center">For formatting, searching, and rewriting javascript.</h2>
 				</div>
-				<div class="center install">
 
-					<pre>
-						<code>npm install -g jsfmt</code>
-					</pre>
-					<h5 class="sourcedocs"><a href="https://github.com/rdio/jsfmt">View the source</a>, or <a href="https://github.com/rdio/jsfmt">read the docs</a></h5>
+				<!-- Installation / source / docs -->
+				<div class="center install">
+					<code>npm install -g jsfmt</code>
+					<h5 class="sourcedocs">
+						<a href="https://github.com/rdio/jsfmt">View the source</a>, or
+						<a href="https://github.com/rdio/jsfmt/blob/master/README.md">read the docs</a></h5>
 				</div>
 			</div>
 
@@ -43,10 +44,10 @@
 				<h3>Formatting <small>to help keep your code neat.</small></h3>
 				<pre>
 					<code>
-# Format `source.js` and print it to stdout.
+# Format `source.js` and print the results to stdout.
 jsfmt source.js
 
-# Format `source.js` and write it to disk.
+# Format `source.js` and write the results to disk.
 jsfmt -w=true source.js
 
 # View a diff of all formatting changes in `source.js` without writing them.
@@ -80,10 +81,10 @@ jsfmt --search="console.log(s)" src/
 				<pre>
 					<code>
 # Replace underscore.js's reduce with the native reduce method in `source.js`.
-jsfmt --rewrite="_.reduce(a, b, c) -> a.reduce(b, c)" examples/reduce.js
+jsfmt --rewrite="_.reduce(a, b, c) -> a.reduce(b, c)" source.js
 
-# Commit the above changes to disk
-jsfmt --write=true --rewrite="_.reduce(a, b, c) -> a.reduce(b, c)" examples/reduce.js
+# Do it again, but this time save the changes to disk.
+jsfmt --write=true --rewrite="_.reduce(a, b, c) -> a.reduce(b, c)" source.js
 
 # Replace modulo with an expression that always returns a positive number, and run the results.
 jsfmt --rewrite="x % y -> ((x % y) + y) % y" source.js | node
@@ -95,6 +96,8 @@ jsfmt --rewrite="x % y -> ((x % y) + y) % y" source.js | node
 				<hr class="divider">
 			</div>
 
+
+			<!-- Extra things not mentioned above -->
 			<div class="col-md-4">
 				<h4 class="center">Intelligent </h4>
 				<p>
@@ -109,14 +112,15 @@ jsfmt --rewrite="x % y -> ((x % y) + y) % y" source.js | node
 				<h4 class="center">Full API</h4>
 				<p>
 					You can <code>require</code> jsfmt from any node app. Every feature available through the command line is also
-					available through its module.
+					available through its module. Check <a href="https://github.com/rdio/jsfmt">our docs</a> for more information.
 				</p>
 			</div>
 
 			<div class="col-md-4">
 				<h4 class="center">Active Development</h4>
 				<p>
-					Follow our development <a href="https://github.com/rdio/jsfmt">on Github</a>, and feel free to report bugs
+					Jsfmt is currently in development, and is constantly changing and improving.
+					Follow along <a href="https://github.com/rdio/jsfmt">on Github</a>, and feel free to report bugs
 					or request features <a href="https://github.com/rdio/jsfmt/issues?state=open">here.</a>
 				</p>
 			</div>
@@ -125,6 +129,7 @@ jsfmt --rewrite="x % y -> ((x % y) + y) % y" source.js | node
 				<hr class="divider">
 			</div>
 
+			<!-- Footer -->
 			<div class="col-md-12">
 				<footer class="center">
 					<em>&copy; 2014 Rdio, Inc.
