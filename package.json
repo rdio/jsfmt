@@ -32,7 +32,7 @@
     "esprima": "*",
     "underscore": "*",
     "tmp": "*",
-    "minimist": "*",
+    "docopt": "*",
     "rc": "*"
   },
   "repository": {
