@@ -18,7 +18,7 @@ describe('jsfmt', function() {
   });
 
   it('should test basic searching', function() {
-    var results = jsfmt.search('var param1 = 1, done= function(){}; _.each(param1, done);', '_.each(a, b);');
+    var results = jsfmt.search('var param1 = 1, done = function(){}; _.each(param1, done);', '_.each(a, b);');
     results[0].wildcards.a.name.should.eql('param1');
     results[0].wildcards.b.name.should.eql('done');
   });
