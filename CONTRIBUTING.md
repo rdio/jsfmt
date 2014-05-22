@@ -30,5 +30,5 @@ CONTRIBUTING CHANGES
 5. Write new tests expecting the correct functionality and make sure they fail.
 6. Fix the issue until the tests pass.
 7. `git commit -m "<message>" # where <message> is a detailed description of the changes`
-8. `git push origin HEAD`
+8. `git push origin <branch_name>`
 9. Visit your fork on Github and click "Pull request" including the issue number in the description field and hit "Submit"
