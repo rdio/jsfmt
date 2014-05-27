@@ -35,6 +35,7 @@ describe('jsfmt', function() {
   });
 
   it('should transform function args during rewrite', function() {
+    // Can transfer arguments
     jsfmt.rewrite('jade_mixins["my_key"](argA, argB, argC)', 'jade_mixins[a]($b) -> templates[a]($b)')
       .toString().should.eql("templates['my_key'](argA, argB, argC)");
 
@@ -47,7 +48,7 @@ describe('jsfmt', function() {
       .toString().should.eql("templates['my_key'](argC, argA, argB)");
 
     // Move Argument to end
-    jsfmt.rewrite('jade_mixins["my_key"](argA, argB, argC)', 'jade_mixins[a](b, $c) -> templates[a]($c, b)')
+    jsfmt.rewrite('jade_mixins["my_key"](argA, argB, argC)', 'jade_mixins[a](c, $b) -> templates[a]($b, c)')
       .toString().should.eql("templates['my_key'](argB, arcC, arcA)");
   });
 });
