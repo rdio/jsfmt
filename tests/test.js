@@ -23,6 +23,11 @@ describe('jsfmt', function() {
     results[0].wildcards.b.name.should.eql('done');
   });
 
+  it('should be able to rewrite FunctionDeclaration', function() {
+    jsfmt.rewrite('function myFunc() { return false; }', 'function a() {} -> function wrapper(a) {}')
+      .toString().should.eql('function wrapper(myFunc) {\n}');
+  });
+
   it('should test basic formatting', function() {
     var js = 'var func = function(test){console.log( test );};';
     var result = jsfmt.format(js, {});
