@@ -35,8 +35,13 @@ describe('jsfmt', function() {
     jsfmt.rewrite('var myA = 1, myB = 2;', 'noop -> noop')
       .toString().should.eql('var myA = 1, myB = 2;');
 
+    // As "Program"
     jsfmt.rewrite('var myA = 1, myB = 2;', 'var a = c, b = d; -> var a = c; var b = d;')
       .toString().should.eql('var myA = 1;\nvar myB = 2;');
+
+    // Inside of "BlockStatement" instead of "Program"
+    jsfmt.rewrite('function test() { var myA = 1, myB = 2; }', 'var a = c, b = d; -> var a = c; var b = d;')
+      .toString().should.eql('function test() {\n    var myA = 1;\n    var myB = 2;\n}');
   });
 
   it('should be able to rewrite FunctionDeclaration', function() {
