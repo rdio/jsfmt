@@ -26,10 +26,10 @@
   }
 
   var anotherFun = function(a, b, c) {
-    // TODO: Should wrap to one line
+    // TODO: Should wrap to one line or indent properly
     return a == "a" ||
-      b == "b" ||
-      c == "c";
+    b == "b" ||
+    c == "c";
   };
 
   var myObj = {
@@ -80,11 +80,12 @@
     1, 2, 3
   ]) + '</span>';
 
+  // TODO: Should indent to same level as `var`
   var nestedObjects = [{
-    a: true
-  }, {
-    a: false
-  }];
+      a: true
+    }, {
+      a: false
+    }];
 
 }).call(this);
 
