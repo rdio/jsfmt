@@ -25,8 +25,11 @@
     return num * fun(num);
   }
 
-  var anotherFun = function() {
-    return "another" + "Fun";
+  var anotherFun = function(a, b, c) {
+    // TODO: Should wrap to one line
+    return a == "a" ||
+      b == "b" ||
+      c == "c";
   };
 
   var myObj = {
@@ -76,6 +79,12 @@
   var str = '<span>' + fun([
     1, 2, 3
   ]) + '</span>';
+
+  var nestedObjects = [{
+    a: true
+  }, {
+    a: false
+  }];
 
 }).call(this);
 
