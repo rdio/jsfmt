@@ -54,8 +54,11 @@
   // This is a test of conditional wrapping
   if (this) {
     then(that);
+
   } else if (that) {
     then(this);
+
+    // TODO: This `else` comment should align with the subsequent statement
   } else {
     console.error("Wat?");
   }
@@ -79,6 +82,31 @@
   var str = '<span>' + fun([
     1, 2, 3
   ]) + '</span>';
+
+  // TODO: Keep indentation of BinaryOperators inside function call args
+  $(document.body).append('<li>' +
+  myVar.toString() +
+  '</li>');
+
+  // TODO: Wrap + indent accessor expression
+  var myVar = new myVarTypes[
+  'A type']();
+
+  // TODO: Indent call args if wrapped
+  callFunc(
+  'An arg',
+  'Another arg',
+  [
+    'Some final args'
+  ]
+  );
+
+  // TODO: Indent in-line with `if` or don't wrap object expression inside conditional
+  if (!this.model.set(values, {
+      validate: true
+    })) {
+    return;
+  }
 
   // TODO: Should indent to same level as `var`
   var nestedObjects = [{
