@@ -73,7 +73,7 @@
     console.error(err);
   }
 
-  str += '<span>' + fun([
+  var str = '<span>' + fun([
     1, 2, 3
   ]) + '</span>';
 
