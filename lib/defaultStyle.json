@@ -1,4 +1,5 @@
 {
+  "preset": "default",
   "indent": {
     "value": "  ",
     "ArrayExpression": 1,
