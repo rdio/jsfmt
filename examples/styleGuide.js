@@ -42,11 +42,40 @@
       break;
   }
 
+  var that = "Empty";
+
+  function then(that) {
+    return that;
+  }
+
+  // This is a test of conditional wrapping
+  if (this) {
+    then(that);
+  } else if (that) {
+    then(this);
+  } else {
+    console.error("Wat?");
+  }
+
+  console.log("After if/else if/else conditional");
+
+  if (this) {
+    then(that);
+  } else if (that) {
+    then(this);
+  }
+
+  console.log("After if/else if conditional");
+
   try {
     throw new Error("Whoa now");
   } catch (err) {
     console.error(err);
   }
+
+  str += '<span>' + fun([
+    1, 2, 3
+  ]) + '</span>';
 
 }).call(this);
 
