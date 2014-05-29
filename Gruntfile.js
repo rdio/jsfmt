@@ -8,9 +8,18 @@ module.exports = function(grunt) {
         },
         src: ['tests/**/*.js']
       }
+    },
+    exec: {
+      format: './bin/jsfmt -w ./lib/**/*.js ./tests/**/*.js'
+    },
+    jshint: {
+      all: ['Gruntfile.js', 'lib/**/*.js', 'tests/**/*.js']
     }
   });
 
   grunt.loadNpmTasks('grunt-mocha-test');
-  grunt.registerTask('default', ['mochaTest']);
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-exec');
+
+  grunt.registerTask('default', ['mochaTest', 'jshint', 'exec:format']);
 };
