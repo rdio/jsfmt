@@ -10,7 +10,7 @@ module.exports = function(grunt) {
       }
     },
     exec: {
-      format: './bin/jsfmt -w ./lib/**/*.js ./tests/**/*.js'
+      format: './bin/jsfmt -w Gruntfile.js ./lib/**/*.js ./tests/**/*.js'
     },
     jshint: {
       all: ['Gruntfile.js', 'lib/**/*.js', 'tests/**/*.js']
