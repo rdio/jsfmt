@@ -25,5 +25,5 @@ module.exports = function(grunt) {
   grunt.registerTask('hint', 'jshint');
   grunt.registerTask('format', 'exec:format');
 
-  grunt.registerTask('default', ['mochaTest', 'jshint', 'exec:format']);
+  grunt.registerTask('default', ['test', 'hint', 'format']);
 };
