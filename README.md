@@ -3,17 +3,12 @@ jsfmt
 
 [![Build Status](https://travis-ci.org/rdio/jsfmt.svg?branch=master)](https://travis-ci.org/rdio/jsfmt)
 
-`jsfmt` formats javascript and allows AST searching and rewriting. Analogous to [`gofmt`](http://golang.org/cmd/gofmt/).
+For formatting, searching, and rewriting javascript. Analogous to [`gofmt`](http://golang.org/cmd/gofmt/).
 
 Installation
 ---
 
 `npm install -g jsfmt`
-
-Why
----
-
-Javascript formatters exist but most (all?) work on just strings, not the AST. Using Esprima under the hood we have access to the full AST and can do useful things like intelligent find and replace as in `gofmt`.
 
 Usage
 ---
@@ -36,6 +31,11 @@ Options:
 ```
 
 If no path is given it will read from `stdin`. A directory path will recurse over all *.js files in the directory.
+
+Formatting
+---
+
+For formatting `jsfmt` uses [esformatter](https://github.com/millermedeiros/esformatter).
 
 ### .jsfmtrc
 
@@ -62,7 +62,7 @@ The search rule is very similar but just outputs expressions that match the give
 API
 ---
 
-Searching:
+### Searching
 
 ```javascript
 var jsfmt = require('jsfmt');
@@ -75,7 +75,7 @@ jsfmt.search(js, "R.Component.create(a, { dependencies: z })").forEach(function(
 });
 ```
 
-Rewriting:
+### Rewriting
 
 ```javascript
 var jsfmt = require('jsfmt');
@@ -84,6 +84,18 @@ var fs = require('fs');
 var js = fs.readFileSync('my_file.js');
 
 js = jsfmt.rewrite(js, "_.each(a, b) -> a.forEach(b)");
+```
+
+### Formatting
+
+```javascript
+var jsfmt = require('jsfmt');
+var fs = require('fs');
+
+var js = fs.readFileSync('my_file.js');
+var config = jsfmt.getConfig();
+
+js = jsfmt.format(js, config);
 ```
 
 Examples
