@@ -3,17 +3,12 @@ jsfmt
 
 [![Build Status](https://travis-ci.org/rdio/jsfmt.svg?branch=master)](https://travis-ci.org/rdio/jsfmt)
 
-`jsfmt` formats javascript and allows AST searching and rewriting. Analogous to [`gofmt`](http://golang.org/cmd/gofmt/).
+For formatting, searching, and rewriting JavaScript. Analogous to [`gofmt`](http://golang.org/cmd/gofmt/).
 
 Installation
 ---
 
 `npm install -g jsfmt`
-
-Why
----
-
-Javascript formatters exist but most (all?) work on just strings, not the AST. Using Esprima under the hood we have access to the full AST and can do useful things like intelligent find and replace as in `gofmt`.
 
 Usage
 ---
@@ -37,6 +32,11 @@ Options:
 
 If no path is given it will read from `stdin`. A directory path will recurse over all *.js files in the directory.
 
+Formatting
+---
+
+For formatting `jsfmt` uses [esformatter](https://github.com/millermedeiros/esformatter).
+
 ### .jsfmtrc
 
 Any of the [esformatter](https://github.com/millermedeiros/esformatter) formatting
@@ -46,82 +46,102 @@ options can be overwritten via a `.jsfmtrc` file. The file is parsed using
 `jsfmt` will also attempt to pickup and use the configured `indent`
 variable from your `.jshintrc` configuration file, if present.
 
+A config file can be manually specified using `--config config.json`.
+
 Rewriting
 ---
 
-The rewrite rule allows rewriting portions of the javascript's AST before formatting. This is especially handy for intelligent renaming and handling API changes from a library. The `--rewrite` flag must be a string of the form:
+The `--rewrite` flag allows rewriting portions of the JavaScript's AST before formatting. This is especially handy for intelligent renaming and handling API changes from a library. The rewrite rule must be a string of the form:
 
     pattern -> replacement
 
-Both `pattern` and `replacement` must be valid javascript. In `pattern`, single-character lowercase identifiers serve as wildcards matching arbitrary expressions; those expressions will be substituted for the same identifiers in the `replacement`.
+Both `pattern` and `replacement` must be valid JavaScript. In `pattern`, single-character lowercase identifiers serve as wildcards matching arbitrary expressions; those expressions will be substituted for the same identifiers in the `replacement`.
 
-### Searching
+### Example
 
-The search rule is very similar but just outputs expressions that match the given search expression.
+Rewrite occurences of `_.reduce` to use native reduce:
+
+    jsfmt --rewrite "_.reduce(a, b, c) -> a.reduce(b, c)" reduce.js
+
+Searching
+---
+
+The `--search` flag allows searching through a JavaScript's AST. The search rule is very similar to the rewrite rule but just outputs expressions that match the given search expression. The search expression must be valid JavaScript.
+
+### Example
+
+Find occurences of `_.reduce`:
+
+    jsfmt --search "_.reduce(a, b, c)" reduce.js
 
 API
 ---
 
-Searching:
+### Searching
+
+```javascript
+jsfmt.search(<javascript_string>, <search_expression>) // Returns array of matches
+```
+
+#### Example
 
 ```javascript
 var jsfmt = require('jsfmt');
 var fs = require('fs');
 
-var js = fs.readFileSync('my_file.js');
+var js = fs.readFileSync('component.js');
 
 jsfmt.search(js, "R.Component.create(a, { dependencies: z })").forEach(function(matches, wildcards) {
   console.log(wildcards.z);
 });
 ```
 
-Rewriting:
+### Rewriting
+
+```javascript
+jsfmt.rewrite(<javascript_string>, <rewrite_rule>) // Returns rewritten JavaScript
+```
+
+#### Example
 
 ```javascript
 var jsfmt = require('jsfmt');
 var fs = require('fs');
 
-var js = fs.readFileSync('my_file.js');
+var js = fs.readFileSync('each.js');
 
 js = jsfmt.rewrite(js, "_.each(a, b) -> a.forEach(b)");
 ```
 
-Examples
----
-
-Rewrite occurences of `_.reduce` to use native reduce:
-
-```bash
-jsfmt --rewrite "_.reduce(a, b, c) -> a.reduce(b, c)" examples/reduce.js
-```
-
-Before:
+### Formatting
 
 ```javascript
-var values = [1, 2, 3, 4];
-_.reduce(values, function(sum, value) {
-  return sum + value;
-}, 0);
+jsfmt.format(<javascript_string>, <config_object>) // Returns formatted JavaScript
 ```
 
-After:
+#### Example
 
 ```javascript
-var values = [1, 2, 3, 4];
-values.reduce(function(sum, value) {
-  return sum + value;
-}, 0);
+var jsfmt = require('jsfmt');
+var fs = require('fs');
+
+var js = fs.readFileSync('unformatted.js');
+var config = jsfmt.getConfig();
+
+js = jsfmt.format(js, config);
 ```
 
 Links
 ---
 
-- Atom Package - https://atom.io/packages/atom-jsfmt - "Automatically run jsfmt every time you save a javascript source file."
+- Atom Package - https://atom.io/packages/atom-jsfmt - "Automatically run jsfmt every time you save a JavaScript source file."
 - Grunt Task - https://github.com/james2doyle/grunt-jsfmt - "A task for the jsfmt library."
 - Emacs Plugin - https://github.com/brettlangdon/jsfmt.el - "Run jsfmt from within emacs"
 
 Changelog
 ---
+
+### v0.3.0
 
 ### v0.2.0
 
