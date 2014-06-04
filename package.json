@@ -14,9 +14,9 @@
     "test": "mocha tests/*.js -R spec"
   },
   "files": [
-      "bin",
-      "lib",
-      "LICENSE.MD"
+    "bin",
+    "lib",
+    "LICENSE.MD"
   ],
   "maintainers": [
     {
