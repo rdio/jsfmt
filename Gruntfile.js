@@ -1,4 +1,13 @@
-module.exports = function(grunt){
+module.exports = function(grunt) {
+  var expandArray = function(pattern) {
+    var files = grunt.file.expand(pattern);
+    var output = {};
+    files.forEach(function(file) {
+      output[file] = file;
+    });
+    return output;
+  };
+
   grunt.initConfig({
     jshint: {
       lib: {
@@ -14,6 +23,19 @@ module.exports = function(grunt){
           reporter: 'spec',
         },
         src: ['tests/**/*.js'],
+      },
+    },
+    jsfmt: {
+      lib: {
+        files: expandArray('lib/**/*.js'),
+      },
+      tests: {
+        files: expandArray('tests/**/*.js'),
+      },
+      grunt: {
+        files: {
+          'Gruntfile.js': 'Gruntfile.js',
+        },
       },
     },
   });
