@@ -58,19 +58,19 @@ describe('jsfmt', function() {
   it('should transform function args during rewrite', function() {
     // Can transfer arguments
     jsfmt.rewrite('jade_mixins["my_key"](argA, argB, argC)', 'jade_mixins[a]($b) -> templates[a]($b)')
-      .toString().should.eql("templates['my_key'](argA, argB, argC)");
+      .toString().should.eql("templates['my_key'](argA, argB, argC);");
 
     // Can drop Argument
     jsfmt.rewrite('jade_mixins["my_key"](argA, argB, argC)', 'jade_mixins[a]($b, c) -> templates[a]($b)')
-      .toString().should.eql("templates['my_key'](argA, argB)");
+      .toString().should.eql("templates['my_key'](argA, argB);");
 
     // Move Argument to beginning
     jsfmt.rewrite('jade_mixins["my_key"](argA, argB, argC)', 'jade_mixins[a]($b, c) -> templates[a](c, $b)')
-      .toString().should.eql("templates['my_key'](argC, argA, argB)");
+      .toString().should.eql("templates['my_key'](argC, argA, argB);");
 
     // Move Argument to end
     jsfmt.rewrite('jade_mixins["my_key"](argA, argB, argC)', 'jade_mixins[a](c, $b) -> templates[a]($b, c)')
-      .toString().should.eql("templates['my_key'](argB, arcC, arcA)");
+      .toString().should.eql("templates['my_key'](argB, arcC, arcA);");
   });
 
   it('should test basic validation', function() {
