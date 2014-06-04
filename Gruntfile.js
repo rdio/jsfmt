@@ -1,13 +1,4 @@
 module.exports = function(grunt) {
-  var expandArray = function(pattern) {
-    var files = grunt.file.expand(pattern);
-    var output = {};
-    files.forEach(function(file) {
-      output[file] = file;
-    });
-    return output;
-  };
-
   grunt.initConfig({
     jshint: {
       lib: {
