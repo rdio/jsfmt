@@ -29,7 +29,7 @@
     "rocambole": "*",
     "esformatter": "*",
     "escodegen": "*",
-    "esprima": "*",
+    "esprima": "ariya/esprima#harmony",
     "underscore": "*",
     "tmp": "*",
     "docopt": "*",
