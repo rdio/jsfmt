@@ -25,23 +25,17 @@ module.exports = function(grunt) {
         src: ['tests/**/*.js'],
       },
     },
-    jsfmt: {
-      lib: {
-        files: expandArray('lib/**/*.js'),
-      },
-      tests: {
-        files: expandArray('tests/**/*.js'),
-      },
-      grunt: {
-        files: {
-          'Gruntfile.js': 'Gruntfile.js',
-        },
-      },
+    exec: {
+      jsfmtLib: './bin/jsfmt -w ./lib/**/*.js',
+      jsfmtTests: './bin/jsfmt -w ./tests/**/*.js',
+      jsfmtGrunt: './bin/jsfmt -w ./Gruntfile.js',
+      jsfmtStyleGuide: './bin/jsfmt -w ./examples/styleGuide.js',
     },
   });
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-jsfmt');
+  grunt.loadNpmTasks('grunt-exec');
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.registerTask('default', ['jshint', 'mochaTest']);
+  grunt.registerTask('fmt', ['exec']);
 };
