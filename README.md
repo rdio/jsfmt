@@ -4,6 +4,7 @@ jsfmt
 [![NPM version](https://badge.fury.io/js/jsfmt.svg)](http://badge.fury.io/js/jsfmt)
 [![Build Status](https://travis-ci.org/rdio/jsfmt.svg?branch=master)](https://travis-ci.org/rdio/jsfmt)
 [![Dependency Status](https://david-dm.org/rdio/jsfmt.png)](https://david-dm.org/)
+[![Coverage Status](https://coveralls.io/repos/rdio/jsfmt/badge.png)](https://coveralls.io/r/rdio/jsfmt)
 
 `jsfmt` formats javascript and allows AST searching and rewriting. Analogous to [`gofmt`](http://golang.org/cmd/gofmt/).
 
