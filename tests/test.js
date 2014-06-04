@@ -3,7 +3,9 @@
 'use strict';
 var should = require('should');
 var fs = require('fs');
-var jsfmt = require('../lib/index');
+
+var libPath = process.env.JSFMT_COV? 'lib-cov' : 'lib';
+var jsfmt = require('../' + libPath + '/index');
 
 describe('jsfmt', function() {
   it('should test basic rewrite', function() {
