@@ -2,3 +2,6 @@ language: node_js
 node_js:
   - '0.11'
   - '0.10'
+after_script:
+  - jscoverage --no-highlight lib lib-cov
+  - JSFMT_COV=1 mocha -R mocha-lcov-reporter -r jscoverage --covinject=true ./tests | coveralls
