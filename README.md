@@ -77,8 +77,56 @@ Find occurences of `_.reduce`:
 
     jsfmt --search "_.reduce(a, b, c)" reduce.js
 
+Validating
+---
+
+The `--validate` flag will print any errors found by esprima while parsing the JavaScript.
+
+### Example
+
+    jsfmt --validate bad.js
+
 API
 ---
+
+### Formatting
+
+```javascript
+jsfmt.format(<javascript_string>, <config_object>) // Returns formatted JavaScript
+```
+
+```javascript
+var config = jsfmt.getConfig(); // Loads the jsfmt config from the appropriate rc file or default config object
+```
+
+#### Example
+
+```javascript
+var jsfmt = require('jsfmt');
+var fs = require('fs');
+
+var js = fs.readFileSync('unformatted.js');
+var config = jsfmt.getConfig();
+
+js = jsfmt.format(js, config);
+```
+
+### Rewriting
+
+```javascript
+jsfmt.rewrite(<javascript_string>, <rewrite_rule>) // Returns rewritten JavaScript
+```
+
+#### Example
+
+```javascript
+var jsfmt = require('jsfmt');
+var fs = require('fs');
+
+var js = fs.readFileSync('each.js');
+
+js = jsfmt.rewrite(js, "_.each(a, b) -> a.forEach(b)");
+```
 
 ### Searching
 
@@ -99,10 +147,10 @@ jsfmt.search(js, "R.Component.create(a, { dependencies: z })").forEach(function(
 });
 ```
 
-### Rewriting
+### Validating
 
 ```javascript
-jsfmt.rewrite(<javascript_string>, <rewrite_rule>) // Returns rewritten JavaScript
+jsfmt.validate(<javascript_string>) // Returns errors found while parsing JavaScript
 ```
 
 #### Example
@@ -112,26 +160,11 @@ var jsfmt = require('jsfmt');
 var fs = require('fs');
 
 var js = fs.readFileSync('each.js');
+var errors = jsfmt.validate(js);
 
-js = jsfmt.rewrite(js, "_.each(a, b) -> a.forEach(b)");
-```
-
-### Formatting
-
-```javascript
-jsfmt.format(<javascript_string>, <config_object>) // Returns formatted JavaScript
-```
-
-#### Example
-
-```javascript
-var jsfmt = require('jsfmt');
-var fs = require('fs');
-
-var js = fs.readFileSync('unformatted.js');
-var config = jsfmt.getConfig();
-
-js = jsfmt.format(js, config);
+for (var i = 0; i < errors.length; i++) {
+  console.error(errors[i]);
+}
 ```
 
 Links
@@ -145,6 +178,17 @@ Changelog
 ---
 
 ### v0.3.0
+
+- Added CONTRIBUTING
+- Added tests
+- Added Gruntfile for development
+- Added CI support
+- Added style guide
+- Added default formatting config
+- Exposed `jsfmt.getConfig` api method for loading jsfmt config
+- Exposed `jsfmt.format(js[, options])` api method for formatting
+- Added `--validate` option and exposed `jsfmt.validate` api method
+- Pinned dependencies
 
 ### v0.2.0
 
