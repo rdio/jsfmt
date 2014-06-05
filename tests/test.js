@@ -15,7 +15,7 @@ describe('jsfmt', function() {
     jsfmt.rewrite('_.each(e, f)', '_.each(a, b) -> a.forEach(b)')
     .toString().should.eql('e.forEach(f);');
 
-    jsfmt.rewrite('_.reduce(a,b,c)', '_.reduce(a, b, c) -> a.reduce(b, c)')
+    jsfmt.rewrite('_.reduce(a, b, c)', '_.reduce(a, b, c) -> a.reduce(b, c)')
     .toString().should.eql('a.reduce(b, c);');
   });
 
@@ -48,7 +48,7 @@ describe('jsfmt', function() {
 
   it('should be able to rewrite FunctionDeclaration', function() {
     jsfmt.rewrite('function myFunc() { return false; }', 'function a() {} -> function wrapper(a) {}')
-    .toString().should.eql('function wrapper(myFunc) {\n}');
+    .toString().should.eql('function wrapper(myFunc) {\n    return false;\n}');
   });
 
   it('should test basic formatting', function() {
@@ -57,22 +57,23 @@ describe('jsfmt', function() {
     result.should.eql('var func = function(test) {\n  console.log(test);\n};');
   });
 
-  it('should transform function args during rewrite', function() {
+  it('should support wildcard rest params', function() {
     // Can transfer arguments
-    jsfmt.rewrite('jade_mixins["my_key"](argA, argB, argC)', 'jade_mixins[a]($b) -> templates[a]($b)')
+    jsfmt.rewrite('jade_mixins["my_key"](argA, argB, argC)', 'jade_mixins[a](...b) -> templates[a](...b)')
       .toString().should.eql("templates['my_key'](argA, argB, argC);");
 
     // Can drop Argument
-    jsfmt.rewrite('jade_mixins["my_key"](argA, argB, argC)', 'jade_mixins[a]($b, c) -> templates[a]($b)')
-      .toString().should.eql("templates['my_key'](argA, argB);");
-
-    // Move Argument to beginning
-    jsfmt.rewrite('jade_mixins["my_key"](argA, argB, argC)', 'jade_mixins[a]($b, c) -> templates[a](c, $b)')
-      .toString().should.eql("templates['my_key'](argC, argA, argB);");
+    // jsfmt.rewrite('jade_mixins["my_key"](argA, argB, argC)', 'jade_mixins[a](a, b, ...c) -> templates[a](a, b)')
+    //   .toString().should.eql("templates['my_key'](argA, argB);");
 
     // Move Argument to end
-    jsfmt.rewrite('jade_mixins["my_key"](argA, argB, argC)', 'jade_mixins[a](c, $b) -> templates[a]($b, c)')
-      .toString().should.eql("templates['my_key'](argB, arcC, arcA);");
+    // jsfmt.rewrite('jade_mixins["my_key"](argA, argB, argC)', 'jade_mixins[a](a, ...b) -> templates[a](...b, a)')
+    //   .toString().should.eql("templates['my_key'](argB, arcC, arcA);");
+  });
+
+  it('should persist block and program statement bodies', function() {
+    jsfmt.rewrite('function myFunc() { console.log("Test"); return false; }', 'function a() { return a; } -> function wrapper(a) { return true; }')
+    .toString().should.eql('function wrapper(myFunc) {\n    console.log("Test");\n    return true;\n}');
   });
 
   it('should test basic validation', function() {
