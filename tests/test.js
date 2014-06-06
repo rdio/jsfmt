@@ -48,7 +48,7 @@ describe('jsfmt', function() {
 
   it('should be able to rewrite FunctionDeclaration', function() {
     jsfmt.rewrite('function myFunc() { return false; }', 'function a() {} -> function wrapper(a) {}')
-    .toString().should.eql('function wrapper(myFunc) {\n    return false;\n}');
+    .toString().should.eql('function wrapper(myFunc) {\n}');
   });
 
   it('should test basic formatting', function() {
@@ -57,31 +57,34 @@ describe('jsfmt', function() {
     result.should.eql('var func = function(test) {\n  console.log(test);\n};');
   });
 
-  it('should support wildcard rest params', function() {
-    // Call
-
+  it('should support wildcard rest params in CallExpression', function() {
     // Can transfer arguments
-    // jsfmt.rewrite('jade_mixins["my_key"](argA, argB, argC)', 'jade_mixins[a](...b) -> templates[a](...b)')
-    //   .toString().should.eql("templates['my_key'](argA, argB, argC);");
+    jsfmt.rewrite('jade_mixins["my_key"](argA, argB, argC)', 'jade_mixins[a](...b) -> templates[a](...b)')
+      .toString().should.eql("templates['my_key'](argA, argB, argC);");
 
     // Can drop argument
-    // jsfmt.rewrite('jade_mixins["my_key"](argA, argB, argC)', 'jade_mixins[a](b, c, ...d) -> templates[a](b, c)')
-    //   .toString().should.eql("templates['my_key'](argA, argB);");
+    jsfmt.rewrite('jade_mixins["my_key"](argA, argB, argC)', 'jade_mixins[a](b, c, ...d) -> templates[a](b, c)')
+      .toString().should.eql("templates['my_key'](argA, argB);");
+  });
 
-    // Definition
-
+  it('should support wildcard rest params in FunctionDeclaration', function() {
     // Can transfer arguments
     jsfmt.rewrite('function test(argA, argB, argC) {}', 'function test(...a) {} -> function test(...a) {}')
       .toString().should.eql("function test(argA, argB, argC) {\n}");
 
     // Can drop argument
-    // jsfmt.rewrite('function test(argA, argB, argC) {}', 'function test(a, b, ...c) {} -> function test(a, b) {}')
-    //   .toString().should.eql("function test(argA, argB) {\n}");
+    jsfmt.rewrite('function test(argA, argB, argC) {}', 'function test(a, b, ...c) {} -> function test(a, b) {}')
+      .toString().should.eql("function test(argA, argB) {\n}");
   });
 
-  it('should persist block and program statement bodies', function() {
-    jsfmt.rewrite('function myFunc() { console.log("Test"); return false; }', 'function a() { return a; } -> function wrapper(a) { return true; }')
-      .toString().should.eql('function wrapper(myFunc) {\n    console.log("Test");\n    return true;\n}');
+  it('should support wildcard rest params in FunctionExpression', function() {
+    // Can transfer arguments
+    jsfmt.rewrite('callMe(function(argA, argB, argC) {})', 'callMe(function(...a) {}) -> callMe(function(...a) {})')
+      .toString().should.eql("callMe(function (argA, argB, argC) {\n});");
+
+    // Can drop argument
+    jsfmt.rewrite('callMe(function(argA, argB, argC) {})', 'callMe(function(a, b, ...c) {}) -> callMe(function(a, b) {})')
+      .toString().should.eql("callMe(function (argA, argB) {\n});");
   });
 
   it('should test basic validation', function() {
