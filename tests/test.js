@@ -58,22 +58,30 @@ describe('jsfmt', function() {
   });
 
   it('should support wildcard rest params', function() {
-    // Can transfer arguments
-    jsfmt.rewrite('jade_mixins["my_key"](argA, argB, argC)', 'jade_mixins[a](...b) -> templates[a](...b)')
-      .toString().should.eql("templates['my_key'](argA, argB, argC);");
+    // Call
 
-    // Can drop Argument
-    // jsfmt.rewrite('jade_mixins["my_key"](argA, argB, argC)', 'jade_mixins[a](a, b, ...c) -> templates[a](a, b)')
+    // Can transfer arguments
+    // jsfmt.rewrite('jade_mixins["my_key"](argA, argB, argC)', 'jade_mixins[a](...b) -> templates[a](...b)')
+    //   .toString().should.eql("templates['my_key'](argA, argB, argC);");
+
+    // Can drop argument
+    // jsfmt.rewrite('jade_mixins["my_key"](argA, argB, argC)', 'jade_mixins[a](b, c, ...d) -> templates[a](b, c)')
     //   .toString().should.eql("templates['my_key'](argA, argB);");
 
-    // Move Argument to end
-    // jsfmt.rewrite('jade_mixins["my_key"](argA, argB, argC)', 'jade_mixins[a](a, ...b) -> templates[a](...b, a)')
-    //   .toString().should.eql("templates['my_key'](argB, arcC, arcA);");
+    // Definition
+
+    // Can transfer arguments
+    jsfmt.rewrite('function test(argA, argB, argC) {}', 'function test(...a) {} -> function test(...a) {}')
+      .toString().should.eql("function test(argA, argB, argC) {\n}");
+
+    // Can drop argument
+    // jsfmt.rewrite('function test(argA, argB, argC) {}', 'function test(a, b, ...c) {} -> function test(a, b) {}')
+    //   .toString().should.eql("function test(argA, argB) {\n}");
   });
 
   it('should persist block and program statement bodies', function() {
     jsfmt.rewrite('function myFunc() { console.log("Test"); return false; }', 'function a() { return a; } -> function wrapper(a) { return true; }')
-    .toString().should.eql('function wrapper(myFunc) {\n    console.log("Test");\n    return true;\n}');
+      .toString().should.eql('function wrapper(myFunc) {\n    console.log("Test");\n    return true;\n}');
   });
 
   it('should test basic validation', function() {
