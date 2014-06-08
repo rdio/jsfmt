@@ -18,3 +18,17 @@ describe('jsfmt.validate', function() {
     errors[0].description.should.eql('Illegal return statement');
   });
 });
+
+describe('jsfmt.validateJSON', function() {
+  it('should test validation json object', function() {
+    var js = '{"hello": "world"}';
+    var errors = jsfmt.validateJSON(js);
+    errors.should.have.length(0);
+  });
+
+  it('should test validation json array', function() {
+    var js = '["hello", "world"]';
+    var errors = jsfmt.validateJSON(js);
+    errors.should.have.length(0);
+  });
+});

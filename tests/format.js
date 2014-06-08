@@ -14,3 +14,23 @@ describe('jsfmt.format', function() {
     result.should.eql('var func = function(test) {\n  console.log(test);\n};');
   });
 });
+
+describe('jsfmt.formatJSON', function() {
+  it('should test formatting json object', function() {
+    var json = '{"hello":"world"}';
+    var result = jsfmt.formatJSON(json, {});
+    result.should.eql('{\n  "hello": "world"\n}');
+  });
+
+  it('should test formatting json array', function() {
+    var json = '["hello","world"]';
+    var result = jsfmt.formatJSON(json, {});
+    result.should.eql('["hello", "world"]');
+  });
+
+  it('should test formatting json array of objects', function() {
+    var json = '[{"hello":"world"},{"foo":500.0}]';
+    var result = jsfmt.formatJSON(json, {});
+    result.should.eql('[{\n    "hello": "world"\n  }, {\n    "foo": 500.0\n  }]');
+  });
+});
