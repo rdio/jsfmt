@@ -37,7 +37,7 @@ describe('jsfmt.rewrite', function() {
     .toString().should.eql('function wrapper(myFunc) {\n}');
   });
 
-  it('should be able to perform a basic rewrite', function() {
+  it('should be able to perform a basic rewrite inside a block', function() {
     jsfmt.rewrite('function test() { return _.map([0, 1, 2], function(val) { return val * val; }); }',
       '_.map(a, b) -> a.map(b)')
     .toString().should.eql('function test() {\n [0, 1, 2].map(function(val) { return val * val; }); }');

@@ -22,7 +22,7 @@ describe('jsfmt.search', function() {
     results[0].wildcards.d.value.should.eql('2');
   });
 
-  it('should be able to perform a basic rewrite', function() {
+  it('should be able to perform a basic search inside a block', function() {
     var results = jsfmt.search('function test() { return _.map([0, 1, 2], function(val) { return val * val; }); }',
       '_.map(a, b)');
     results.length.should.eql(1);
