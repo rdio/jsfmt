@@ -10,13 +10,13 @@ var jsfmt = require('../' + libPath + '/index');
 describe('jsfmt.rewrite', function() {
   it('should test basic rewrite', function() {
     jsfmt.rewrite('_.each(a, b)', '_.each(a, b) -> a.forEach(b)')
-    .toString().should.eql('a.forEach(b);');
+    .toString().should.eql('a.forEach(b)');
 
     jsfmt.rewrite('_.each(e, f)', '_.each(a, b) -> a.forEach(b)')
-    .toString().should.eql('e.forEach(f);');
+    .toString().should.eql('e.forEach(f)');
 
     jsfmt.rewrite('_.reduce(a,b,c)', '_.reduce(a, b, c) -> a.reduce(b, c)')
-    .toString().should.eql('a.reduce(b, c);');
+    .toString().should.eql('a.reduce(b, c)');
   });
 
   it('should be able to rewrite variable declaration', function() {
@@ -40,6 +40,6 @@ describe('jsfmt.rewrite', function() {
   it('should be able to perform a basic rewrite inside a block', function() {
     jsfmt.rewrite('function test() { return _.map([0, 1, 2], function(val) { return val * val; }); }',
       '_.map(a, b) -> a.map(b)')
-    .toString().should.eql('function test() {\n [0, 1, 2].map(function(val) { return val * val; }); }');
+    .toString().should.eql('function test() { return [\n    0,\n    1,\n    2\n].map(function (val) {\n    return val * val;\n}); }');
   });
 });
