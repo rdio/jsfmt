@@ -21,13 +21,13 @@ describe('jsfmt.rewrite', function() {
 
   it('should test basic rewrite with shebang', function() {
     jsfmt.rewrite('#!/usr/bin/env node\n_.each(a, b)', '_.each(a, b) -> a.forEach(b)')
-    .toString().should.eql('#!/usr/bin/env node\na.forEach(b);');
+    .toString().should.eql('#!/usr/bin/env node\na.forEach(b)');
 
     jsfmt.rewrite('#!/usr/bin/env node\n_.each(e, f)', '_.each(a, b) -> a.forEach(b)')
-    .toString().should.eql('#!/usr/bin/env node\ne.forEach(f);');
+    .toString().should.eql('#!/usr/bin/env node\ne.forEach(f)');
 
     jsfmt.rewrite('#!/usr/bin/env node\n_.reduce(a,b,c)', '_.reduce(a, b, c) -> a.reduce(b, c)')
-    .toString().should.eql('#!/usr/bin/env node\na.reduce(b, c);');
+    .toString().should.eql('#!/usr/bin/env node\na.reduce(b, c)');
   });
 
   it('should be able to rewrite variable declaration', function() {
