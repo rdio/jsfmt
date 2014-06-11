@@ -55,7 +55,8 @@
     "parser",
     "rewrite",
     "syntax",
-    "format"
+    "format",
+    "search"
   ],
   "devDependencies": {
     "mocha": "~1.18.2",
