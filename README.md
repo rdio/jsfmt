@@ -177,6 +177,11 @@ Links
 Changelog
 ---
 
+### v0.3.1
+
+- Fixed bug when searching for expressions within BlockStatement or Program body
+- Added JSON support
+
 ### v0.3.0
 
 - Added CONTRIBUTING
