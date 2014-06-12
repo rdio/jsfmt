@@ -19,16 +19,18 @@ Usage
 ```
 $ jsfmt --help
 Usage:
-  jsfmt [--no-format] [--diff|--list|--write] [--rewrite PATTERN|--search PATTERN] [<file>...]
+  jsfmt [--no-format] [--diff|--list|--write] [--validate] [--rewrite PATTERN|--search PATTERN] [--json] [<file>...]
   jsfmt (--version | --help)
 
 Options:
   -h --help                      Show this help text
-  -v --version                   Show jsfmt version
+  --version                      Show jsfmt version
   -d --diff                      Show diff against original file
   -l --list                      List the files which differ from jsfmt output
+  -v --validate                  Validate the input file(s)
   --no-format                    Do not format the input file(s)
   -w --write                     Overwrite the original file with jsfmt output
+  -j --json                      Tell jsfmt that the file being parsed is json
   -r=PATTERN --rewrite PATTERN   Rewrite rule (e.g., 'a.slice(b, len(a) -> a.slice(b)')
   -s=PATTERN --search PATTERN    Search rule (e.g., 'a.slice')
 ```
