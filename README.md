@@ -98,6 +98,10 @@ jsfmt.format(<javascript_string>, <config_object>) // Returns formatted JavaScri
 ```
 
 ```javascript
+jsfmt.formatJSON(<JSON_string>, <config_object>) // Returns formatted JSON
+```
+
+```javascript
 var config = jsfmt.getConfig(); // Loads the jsfmt config from the appropriate rc file or default config object
 ```
 
@@ -153,6 +157,10 @@ jsfmt.search(js, "R.Component.create(a, { dependencies: z })").forEach(function(
 
 ```javascript
 jsfmt.validate(<javascript_string>) // Returns errors found while parsing JavaScript
+```
+
+```javascript
+jsfmt.validateJSON(<JSON_string>) // Returns errors found while parsing JSON
 ```
 
 #### Example
