@@ -3,7 +3,7 @@ jsfmt
 
 [![NPM version](https://badge.fury.io/js/jsfmt.svg)](http://badge.fury.io/js/jsfmt)
 [![Build Status](https://travis-ci.org/rdio/jsfmt.svg?branch=master)](https://travis-ci.org/rdio/jsfmt)
-[![Dependency Status](https://david-dm.org/rdio/jsfmt.png)](https://david-dm.org/)
+[![Dependency Status](https://david-dm.org/rdio/jsfmt.png)](https://david-dm.org/rdio/jsfmt)
 [![Coverage Status](https://coveralls.io/repos/rdio/jsfmt/badge.png)](https://coveralls.io/r/rdio/jsfmt)
 
 For formatting, searching, and rewriting JavaScript. Analogous to [`gofmt`](http://golang.org/cmd/gofmt/).
@@ -176,6 +176,11 @@ Links
 
 Changelog
 ---
+
+### v0.3.1
+
+- Fixed bug when searching for expressions within BlockStatement or Program body
+- Added JSON support
 
 ### v0.3.0
 
