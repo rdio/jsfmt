@@ -31,11 +31,11 @@ describe('jsfmt.search', function() {
   it('should support wildcard rest params in CallExpression', function() {
     // Can transfer arguments
     jsfmt.rewrite('jade_mixins["my_key"](argA, argB, argC)', 'jade_mixins[a](...b) -> templates[a](...b)')
-      .toString().should.eql("templates['my_key'](argA, argB, argC);");
+      .toString().should.eql("templates['my_key'](argA, argB, argC)");
 
     // Can drop argument
     jsfmt.rewrite('jade_mixins["my_key"](argA, argB, argC)', 'jade_mixins[a](b, c, ...d) -> templates[a](b, c)')
-      .toString().should.eql("templates['my_key'](argA, argB);");
+      .toString().should.eql("templates['my_key'](argA, argB)");
   });
 
   it('should support wildcard rest params in FunctionDeclaration', function() {
@@ -51,10 +51,10 @@ describe('jsfmt.search', function() {
   it('should support wildcard rest params in FunctionExpression', function() {
     // Can transfer arguments
     jsfmt.rewrite('callMe(function(argA, argB, argC) {})', 'callMe(function(...a) {}) -> callMe(function(...a) {})')
-      .toString().should.eql("callMe(function (argA, argB, argC) {\n});");
+      .toString().should.eql("callMe(function (argA, argB, argC) {\n})");
 
     // Can drop argument
     jsfmt.rewrite('callMe(function(argA, argB, argC) {})', 'callMe(function(a, b, ...c) {}) -> callMe(function(a, b) {})')
-      .toString().should.eql("callMe(function (argA, argB) {\n});");
+      .toString().should.eql("callMe(function (argA, argB) {\n})");
   });
 });
