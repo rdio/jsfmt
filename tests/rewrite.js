@@ -43,7 +43,7 @@ describe('jsfmt.rewrite', function() {
     .toString().should.eql('function test() { return [\n    0,\n    1,\n    2\n].map(function (val) {\n    return val * val;\n}); }');
   });
 
-  it('should be able to search for unary expression', function() {
+  it('should be able to rewrite unary expression', function() {
     jsfmt.rewrite('var test = !0;', '!0 -> true').toString().should.eql('var test = true;');
     jsfmt.rewrite('var test = !0;', '!0 -> !1').toString().should.eql('var test = !1;');
   });
