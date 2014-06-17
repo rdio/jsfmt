@@ -187,6 +187,11 @@ Links
 Changelog
 ---
 
+### v0.3.2
+
+- Adding support for `UnaryExpression`
+- Fixing bug where rewrite types were not being set properly
+
 ### v0.3.1
 
 - Fixed bug when searching for expressions within BlockStatement or Program body

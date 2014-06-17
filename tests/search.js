@@ -33,4 +33,12 @@ describe('jsfmt.search', function() {
       '_.map(a, b)');
     results.length.should.eql(1);
   });
+
+  it('should be able to search for unary expression', function() {
+    var resultsA = jsfmt.search('!0', '!0');
+    resultsA.length.should.eql(1);
+
+    var resultsB = jsfmt.search('var test = !0;', '!0');
+    resultsB.length.should.eql(1);
+  });
 });
