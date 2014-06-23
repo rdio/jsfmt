@@ -17,6 +17,12 @@ describe('jsfmt.validate', function() {
     errors[0].column.should.eql(7);
     errors[0].description.should.eql('Illegal return statement');
   });
+
+  it('should test shebangs', function() {
+    var js = '#!/usr/bin/env node\nvar func = function(test){console.log( test );};';
+    var errors = jsfmt.validate(js);
+    errors.should.have.length(0);
+  });
 });
 
 describe('jsfmt.validateJSON', function() {

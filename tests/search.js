@@ -14,6 +14,12 @@ describe('jsfmt.search', function() {
     results[0].wildcards.b.name.should.eql('done');
   });
 
+  it('should test basic searching with shebang', function() {
+    var results = jsfmt.search('#!/usr/bin/env node\nvar param1 = 1, done = function(){}; _.each(param1, done);', '_.each(a, b);');
+    results[0].wildcards.a.name.should.eql('param1');
+    results[0].wildcards.b.name.should.eql('done');
+  });
+
   it('should be able to match variable declaration', function() {
     var results = jsfmt.search('var myA = 1; var myB = 2;', 'var a = b; var c = d;');
     results[0].wildcards.a.name.should.eql('myA');
@@ -56,5 +62,13 @@ describe('jsfmt.search', function() {
     // Can drop argument
     jsfmt.rewrite('callMe(function(argA, argB, argC) {})', 'callMe(function(a, b, ...c) {}) -> callMe(function(a, b) {})')
       .toString().should.eql("callMe(function (argA, argB) {\n})");
+  });
+
+  it('should be able to search for unary expression', function() {
+    var resultsA = jsfmt.search('!0', '!0');
+    resultsA.length.should.eql(1);
+
+    var resultsB = jsfmt.search('var test = !0;', '!0');
+    resultsB.length.should.eql(1);
   });
 });

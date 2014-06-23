@@ -19,16 +19,18 @@ Usage
 ```
 $ jsfmt --help
 Usage:
-  jsfmt [--no-format] [--diff|--list|--write] [--rewrite PATTERN|--search PATTERN] [<file>...]
+  jsfmt [--no-format] [--diff|--list|--write] [--validate] [--rewrite PATTERN|--search PATTERN] [--json] [<file>...]
   jsfmt (--version | --help)
 
 Options:
   -h --help                      Show this help text
-  -v --version                   Show jsfmt version
+  --version                      Show jsfmt version
   -d --diff                      Show diff against original file
   -l --list                      List the files which differ from jsfmt output
+  -v --validate                  Validate the input file(s)
   --no-format                    Do not format the input file(s)
   -w --write                     Overwrite the original file with jsfmt output
+  -j --json                      Tell jsfmt that the file being parsed is json
   -r=PATTERN --rewrite PATTERN   Rewrite rule (e.g., 'a.slice(b, len(a) -> a.slice(b)')
   -s=PATTERN --search PATTERN    Search rule (e.g., 'a.slice')
 ```
@@ -96,6 +98,10 @@ jsfmt.format(<javascript_string>, <config_object>) // Returns formatted JavaScri
 ```
 
 ```javascript
+jsfmt.formatJSON(<JSON_string>, <config_object>) // Returns formatted JSON
+```
+
+```javascript
 var config = jsfmt.getConfig(); // Loads the jsfmt config from the appropriate rc file or default config object
 ```
 
@@ -153,6 +159,10 @@ jsfmt.search(js, "R.Component.create(a, { dependencies: z })").forEach(function(
 jsfmt.validate(<javascript_string>) // Returns errors found while parsing JavaScript
 ```
 
+```javascript
+jsfmt.validateJSON(<JSON_string>) // Returns errors found while parsing JSON
+```
+
 #### Example
 
 ```javascript
@@ -176,6 +186,11 @@ Links
 
 Changelog
 ---
+
+### v0.3.2
+
+- Adding support for `UnaryExpression`
+- Fixing bug where rewrite types were not being set properly
 
 ### v0.3.1
 

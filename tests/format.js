@@ -13,6 +13,12 @@ describe('jsfmt.format', function() {
     var result = jsfmt.format(js, {});
     result.should.eql('var func = function(test) {\n  console.log(test);\n};');
   });
+
+  it('should test shebangs', function() {
+    var js = '#!/usr/bin/env node\nvar func = function(test){console.log( test );};';
+    var result = jsfmt.format(js, {});
+    result.should.eql('#!/usr/bin/env node\nvar func = function(test) {\n  console.log(test);\n};');
+  });
 });
 
 describe('jsfmt.formatJSON', function() {
