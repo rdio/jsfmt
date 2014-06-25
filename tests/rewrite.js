@@ -50,7 +50,7 @@ describe('jsfmt.rewrite', function() {
 
   it('should be able to perform a basic rewrite inside a block', function() {
     jsfmt.rewrite('function test() { return _.map([0, 1, 2], function(val) { return val * val; }); }',
-      '_.map(a, b) -> a.map(b)')
+    '_.map(a, b) -> a.map(b)')
     .toString().should.eql('function test() { return [\n    0,\n    1,\n    2\n].map(function (val) {\n    return val * val;\n}); }');
   });
 

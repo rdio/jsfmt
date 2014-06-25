@@ -28,8 +28,8 @@
   var anotherFun = function(a, b, c) {
     // TODO: Should wrap to one line or indent properly
     return a == "a" ||
-    b == "b" ||
-    c == "c";
+      b == "b" ||
+      c == "c";
   };
 
   var myObj = {
@@ -58,7 +58,7 @@
   } else if (that) {
     then(this);
 
-    // TODO: This `else` comment should align with the subsequent statement
+  // TODO: This `else` comment should align with the subsequent statement
   } else {
     console.error("Wat?");
   }
@@ -94,11 +94,11 @@
 
   // TODO: Indent call args if wrapped
   callFunc(
-  'An arg',
-  'Another arg',
-  [
-    'Some final args'
-  ]
+    'An arg',
+    'Another arg',
+    [
+      'Some final args'
+    ]
   );
 
   // TODO: Indent in-line with `if` or don't wrap object expression inside conditional
@@ -110,10 +110,10 @@
 
   // TODO: Should indent to same level as `var`
   var nestedObjects = [{
-      a: true
+    a: true
     }, {
-      a: false
-    }];
+    a: false
+  }];
 
 }).call(this);
 
