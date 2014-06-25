@@ -37,6 +37,6 @@ describe('jsfmt.formatJSON', function() {
   it('should test formatting json array of objects', function() {
     var json = '[{"hello":"world"},{"foo":500.0}]';
     var result = jsfmt.formatJSON(json, {});
-    result.should.eql('[{\n    "hello": "world"\n  }, {\n    "foo": 500.0\n  }]');
+    result.should.eql('[{\n  "hello": "world"\n  }, {\n  "foo": 500.0\n}]');
   });
 });
