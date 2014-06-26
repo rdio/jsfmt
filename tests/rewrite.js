@@ -58,4 +58,8 @@ describe('jsfmt.rewrite', function() {
     jsfmt.rewrite('var test = !0;', '!0 -> true').toString().should.eql('var test = true;');
     jsfmt.rewrite('var test = !0;', '!0 -> !1').toString().should.eql('var test = !1;');
   });
+
+  it('should rewrite AssignmentExpression', function() {
+    jsfmt.rewrite('var test = 4;', 'var a = b -> a += b').toString().should.eql('test += 4;');
+  });
 });
