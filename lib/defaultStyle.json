@@ -1,5 +1,6 @@
 {
   "preset": "default",
+  "plugins": ["esformatter-braces"],
   "indent": {
     "value": "  ",
     "ArrayExpression": 1,
