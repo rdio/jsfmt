@@ -21,9 +21,9 @@ describe('jsfmt.rewrite', function() {
       '}'].join('\n');
 
     var result = ['var x=true;', 'var y=false;',
-      'x=1;',
-      'y=2;',
-      'z=3;',
+      'x = 1;',
+      'y = 2;',
+      'z = 3;',
       'function f() {', '}',
       'function g() {', '}',
       'if (x)', 'f();',
@@ -67,7 +67,7 @@ describe('jsfmt.rewrite', function() {
 
     // Inside of "BlockStatement" instead of "Program"
     jsfmt.rewrite('function test() { var myA = 1, myB = 2; }', 'var a = c, b = d; -> var a = c; var b = d;')
-    .toString().should.eql('function test() {\n    var myA = 1;\n    var myB = 2;\n}');
+    .toString().should.eql('function test() { var myA = 1;\nvar myB = 2; }');
   });
 
   it('should be able to rewrite FunctionDeclaration', function() {
@@ -87,6 +87,6 @@ describe('jsfmt.rewrite', function() {
   });
 
   it('should rewrite AssignmentExpression', function() {
-    jsfmt.rewrite('var test = 4;', 'var a = b -> a += b').toString().should.eql('test += 4;');
+    jsfmt.rewrite('var test = 4;', 'var a = b -> a += b').toString().should.eql('test += 4');
   });
 });

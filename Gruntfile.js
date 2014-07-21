@@ -11,8 +11,7 @@ module.exports = function(grunt) {
     mochaTest: {
       tests: {
         options: {
-          reporter: 'spec',
-          grep: 'BlockStatement rewrite'
+          reporter: 'spec'
         },
         src: ['tests/**/*.js'],
       },
