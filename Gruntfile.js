@@ -12,6 +12,7 @@ module.exports = function(grunt) {
       tests: {
         options: {
           reporter: 'spec',
+          grep: 'BlockStatement rewrite'
         },
         src: ['tests/**/*.js'],
       },

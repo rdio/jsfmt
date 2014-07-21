@@ -8,6 +8,33 @@ var libPath = process.env.JSFMT_COV ? 'lib-cov' : 'lib';
 var jsfmt = require('../' + libPath + '/index');
 
 describe('jsfmt.rewrite', function() {
+
+  it('should test multiline BlockStatement rewrite' ,function() {
+    var js = ['var x=true;', 'var y=false;',
+      'x=1, y=2, z=3;',
+      'function f() {', '}',
+      'function g() {', '}',
+      'if (x)', 'f();',
+      'x || f();',
+      'if (x) {', 'f();',
+      '} else {', 'g();',
+      '}'].join('\n');
+
+    var result = ['var x=true;', 'var y=false;',
+      'x=1;',
+      'y=2;',
+      'z=3;',
+      'function f() {', '}',
+      'function g() {', '}',
+      'if (x)', 'f();',
+      'x || f();',
+      'if (x) {', 'f();',
+      '} else {', 'g();',
+      '}'].join('\n');
+
+    jsfmt.rewrite(js, 'a,b,c; -> a;b;c;').toString().should.eql(result);
+  });
+
   it('should test basic rewrite', function() {
     jsfmt.rewrite('_.each(a, b)', '_.each(a, b) -> a.forEach(b)')
     .toString().should.eql('a.forEach(b)');
