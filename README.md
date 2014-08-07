@@ -48,7 +48,7 @@ Any of the [esformatter](https://github.com/millermedeiros/esformatter) formatti
 options can be overwritten via a `.jsfmtrc` file. The file is parsed using
 [rc](https://github.com/dominictarr/rc), which accepts either a `json` or `ini` formatted file.
 
-A `.jsfmtrc` will be read if it exists in any of the following directories
+A `.jsfmtrc` will be read if it exists in any of the following directories:
 * a local .jsfmtrc or the first found looking in ./ ../ ../../ ../../../ etc.
 * $HOME/.jsfmtrc
 * $HOME/.jsfmt/config
