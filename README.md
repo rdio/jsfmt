@@ -19,7 +19,7 @@ Usage
 ```
 $ jsfmt --help
 Usage:
-  jsfmt [--no-format] [--diff|--list|--write] [--validate] [--rewrite PATTERN|--search PATTERN] [--json] [<file>...]
+  jsfmt [--no-format] [--save-ast] [--diff|--list|--write] [--validate] [--rewrite PATTERN|--search PATTERN] [--json|--ast] [<file>...]
   jsfmt (--version | --help)
 
 Options:
@@ -31,6 +31,8 @@ Options:
   --no-format                    Do not format the input file(s)
   -w --write                     Overwrite the original file with jsfmt output
   -j --json                      Tell jsfmt that the file being parsed is json
+  -a --ast                       Tell jsfmt that the file being parsed is in JSON AST
+  --save-ast                     Output the resulting js in JSON AST format
   -r=PATTERN --rewrite PATTERN   Rewrite rule (e.g., 'a.slice(b, len(a) -> a.slice(b)')
   -s=PATTERN --search PATTERN    Search rule (e.g., 'a.slice')
 ```
