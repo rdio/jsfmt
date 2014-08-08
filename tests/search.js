@@ -14,6 +14,30 @@ describe('jsfmt.search', function() {
     results[0].wildcards.b.name.should.eql('done');
   });
 
+  it('should test multiline BlockStatement search' ,function() {
+    var js = ['var x=true;', 'var y=false;',
+      'x=1, y=2, z=3;',
+      'function f() {', '}',
+      'function g() {', '}',
+      'a=4, b=5, c=6;',
+      'if (x)', 'f();',
+      'x || f();',
+      'if (x) {', 'f();',
+      '} else {', 'g();',
+      '}'].join('\n');
+
+    var results = jsfmt.search(js, 'a,b,c;');
+    results.length.should.equal(2);
+
+    should.exist(results[0].wildcards.a);
+    should.exist(results[0].wildcards.b);
+    should.exist(results[0].wildcards.c);
+
+    should.exist(results[1].wildcards.a);
+    should.exist(results[1].wildcards.b);
+    should.exist(results[1].wildcards.c);
+  });
+
   it('should test basic searching with shebang', function() {
     var results = jsfmt.search('#!/usr/bin/env node\nvar param1 = 1, done = function(){}; _.each(param1, done);', '_.each(a, b);');
     results[0].wildcards.a.name.should.eql('param1');

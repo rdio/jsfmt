@@ -8,6 +8,33 @@ var libPath = process.env.JSFMT_COV ? 'lib-cov' : 'lib';
 var jsfmt = require('../' + libPath + '/index');
 
 describe('jsfmt.rewrite', function() {
+
+  it('should test multiline BlockStatement rewrite' ,function() {
+    var js = ['var x=true;', 'var y=false;',
+      'x=1, y=2, z=3;',
+      'function f() {', '}',
+      'function g() {', '}',
+      'if (x)', 'f();',
+      'x || f();',
+      'if (x) {', 'f();',
+      '} else {', 'g();',
+      '}'].join('\n');
+
+    var result = ['var x=true;', 'var y=false;',
+      'x = 1;',
+      'y = 2;',
+      'z = 3;',
+      'function f() {', '}',
+      'function g() {', '}',
+      'if (x)', 'f();',
+      'x || f();',
+      'if (x) {', 'f();',
+      '} else {', 'g();',
+      '}'].join('\n');
+
+    jsfmt.rewrite(js, 'a,b,c; -> a;b;c;').toString().should.eql(result);
+  });
+
   it('should test basic rewrite', function() {
     jsfmt.rewrite('_.each(a, b)', '_.each(a, b) -> a.forEach(b)')
     .toString().should.eql('a.forEach(b)');
@@ -40,7 +67,7 @@ describe('jsfmt.rewrite', function() {
 
     // Inside of "BlockStatement" instead of "Program"
     jsfmt.rewrite('function test() { var myA = 1, myB = 2; }', 'var a = c, b = d; -> var a = c; var b = d;')
-    .toString().should.eql('function test() {\n    var myA = 1;\n    var myB = 2;\n}');
+    .toString().should.eql('function test() { var myA = 1;\nvar myB = 2; }');
   });
 
   it('should be able to rewrite FunctionDeclaration', function() {
@@ -60,6 +87,6 @@ describe('jsfmt.rewrite', function() {
   });
 
   it('should rewrite AssignmentExpression', function() {
-    jsfmt.rewrite('var test = 4;', 'var a = b -> a += b').toString().should.eql('test += 4;');
+    jsfmt.rewrite('var test = 4;', 'var a = b -> a += b').toString().should.eql('test += 4');
   });
 });
