@@ -75,7 +75,7 @@
 
   try {
     throw new Error("Whoa now");
-  } catch (err) {
+  } catch ( err ) {
     console.error(err);
   }
 
@@ -90,7 +90,7 @@
 
   // TODO: Wrap + indent accessor expression
   var myVar = new myVarTypes[
-  'A type']();
+    'A type']();
 
   // TODO: Indent call args if wrapped
   callFunc(
