@@ -26,7 +26,6 @@
   }
 
   var anotherFun = function(a, b, c) {
-    // TODO: Should wrap to one line or indent properly
     return a == "a" ||
       b == "b" ||
       c == "c";
@@ -58,7 +57,6 @@
   } else if (that) {
     then(this);
 
-  // TODO: This `else` comment should align with the subsequent statement
   } else {
     console.error("Wat?");
   }
@@ -75,7 +73,7 @@
 
   try {
     throw new Error("Whoa now");
-  } catch (err) {
+  } catch ( err ) {
     console.error(err);
   }
 
@@ -88,11 +86,9 @@
   myVar.toString() +
   '</li>');
 
-  // TODO: Wrap + indent accessor expression
   var myVar = new myVarTypes[
-  'A type']();
+    'A type']();
 
-  // TODO: Indent call args if wrapped
   callFunc(
     'An arg',
     'Another arg',
@@ -108,7 +104,6 @@
     return;
   }
 
-  // TODO: Should indent to same level as `var`
   var nestedObjects = [{
     a: true
     }, {
