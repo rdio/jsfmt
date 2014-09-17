@@ -198,6 +198,18 @@ Links
 Changelog
 ---
 
+### v0.4.0
+
+- Added two new command-line args for AST formatting.
+- Removed `--config` option in favor of .jsfmtrc and better docs around rc.
+- Updated esformatter and using new esformatter plugin for automatic brace insertion.
+- Updated style guide to include esformatter changes.
+- Fixes and cleanup for shebang.
+- Support for variable arguments using ES6 rest syntax.
+- General rewrite cleanup.
+- Changing exit code to `-1` on missing arg failure.
+- Updates to `rc` and other dependencies.
+
 ### v0.3.2
 
 - Adding support for `UnaryExpression`
