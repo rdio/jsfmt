@@ -193,6 +193,7 @@ Links
 - Atom Package - https://atom.io/packages/atom-jsfmt - "Automatically run jsfmt every time you save a JavaScript source file."
 - Grunt Task - https://github.com/james2doyle/grunt-jsfmt - "A task for the jsfmt library."
 - Emacs Plugin - https://github.com/brettlangdon/jsfmt.el - "Run jsfmt from within emacs"
+- Gulp Task - https://github.com/blai/gulp-jsfmt - "A gulp task for jsfmt."  
 
 Changelog
 ---
