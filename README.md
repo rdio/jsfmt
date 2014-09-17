@@ -39,6 +39,8 @@ Options:
 
 If no path is given it will read from `stdin`. A directory path will recurse over all *.js files in the directory.
 
+Note that the AST options (`--ast` and `--save-ast`) are experimental and may be removed.
+
 Formatting
 ---
 
@@ -200,7 +202,7 @@ Changelog
 
 ### v0.4.0
 
-- Added two new command-line args for AST formatting.
+- Added two new command-line args for AST formatting. Note that these are experimental and may be removed.
 - Removed `--config` option in favor of .jsfmtrc and better docs around rc.
 - Updated esformatter and using new esformatter plugin for automatic brace insertion.
 - Updated style guide to include esformatter changes.
