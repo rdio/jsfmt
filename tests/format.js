@@ -19,6 +19,14 @@ describe('jsfmt.format', function() {
     var result = jsfmt.format(js, {});
     result.should.eql('#!/usr/bin/env node\nvar func = function(test) {\n  console.log(test);\n};');
   });
+
+  it('should convert a list of var declarations to individual declarations', function() {
+    var js = 'var a,\n  b = 2,\n  c = 3;';
+    var result = jsfmt.format(js, {
+      plugins: ['esformatter-var-each']
+    });
+    result.should.eql('var a;\nvar b = 2;\nvar c = 3;');
+  });
 });
 
 describe('jsfmt.formatJSON', function() {
