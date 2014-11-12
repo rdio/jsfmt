@@ -27,6 +27,14 @@ describe('jsfmt.format', function() {
     });
     result.should.eql('var a;\nvar b = 2;\nvar c = 3;');
   });
+
+  it('should try/catch blocks properly', function() {
+    var js = 'try {\nvar foo = \'bar\';\n} catch (err) {\n// ignore\n}';
+    var result = jsfmt.format(js, {});
+    result.should.eql(
+      'try {\n  var foo = \'bar\';\n} catch (err) {\n  // ignore\n}'
+    );
+  });
 });
 
 describe('jsfmt.formatJSON', function() {
