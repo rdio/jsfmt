@@ -196,7 +196,7 @@ Links
 - Grunt Task - https://github.com/james2doyle/grunt-jsfmt - "A task for the jsfmt library."
 - Emacs Plugin - https://github.com/brettlangdon/jsfmt.el - "Run jsfmt from within emacs"
 - Gulp Task - https://github.com/blai/gulp-jsfmt - "A gulp task for jsfmt."  
-- Sublime Text plugin - https://github.com/paulirish/sublime-jsfmt Very basic. Works.
+- Sublime Text plugin - https://github.com/ionutvmi/sublime-jsfmt - "On-demand and automatic jsfmt from Sublime Text 2 and 3"
 
 Changelog
 ---
