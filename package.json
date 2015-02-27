@@ -1,7 +1,7 @@
 {
   "name": "jsfmt",
   "description": "gofmt for javascript",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "homepage": "https://github.com/rdio/jsfmt",
   "main": "./lib/index.js",
   "engines": {
@@ -21,7 +21,7 @@
   "maintainers": [
     {
       "name": "Jim Fleming",
-      "email": "jim.fleming@rd.io"
+      "email": "jim@barkingmousestudio.com"
     }
   ],
   "dependencies": {
