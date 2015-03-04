@@ -28,15 +28,15 @@
     "docopt": "~0.4.0",
     "escodegen": "~1.3.2",
     "esformatter": "~0.5.0",
-    "esformatter-braces": "~0.1.4",
+    "esformatter-braces": "~1.0.0",
     "esformatter-var-each": "~1.0.0",
     "esprima": "ariya/esprima#harmony",
     "falafel": "~0.3.1",
-    "glob": "~4.0.0",
-    "rc": "~0.5.0",
-    "rocambole": "~0.3.3",
+    "glob": "~4.4.0",
+    "rc": "~0.6.0",
+    "rocambole": "~0.5.0",
     "tmp": "~0.0.23",
-    "underscore": "~1.6.0"
+    "underscore": "~1.8.0"
   },
   "repository": {
     "type": "git",
