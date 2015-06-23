@@ -25,16 +25,16 @@
     }
   ],
   "dependencies": {
+    "deep-extend": "~0.3.2",
     "docopt": "~0.4.0",
     "escodegen": "~1.6.1",
     "esformatter": "~0.5.0",
     "esformatter-braces": "~1.0.0",
     "esformatter-var-each": "~1.0.0",
-    "esprima": "jquery/esprima#harmony",
+    "esprima-fb": "15001.1.0-dev-harmony-fb",
     "falafel": "~0.3.1",
     "glob": "~4.4.0",
     "rc": "~0.6.0",
-    "deep-extend": "~0.3.2",
     "rocambole": "~0.5.0",
     "tmp": "~0.0.23",
     "underscore": "~1.8.0"
