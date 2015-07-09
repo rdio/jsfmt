@@ -9,7 +9,9 @@
     3
   ];
 
-  var a, b, c;
+  var a;
+  var b;
+  var c;
   var another = test;
 
   var sum = 0;
@@ -78,13 +80,13 @@
   }
 
   var str = '<span>' + fun([
-    1, 2, 3
-  ]) + '</span>';
+      1, 2, 3
+    ]) + '</span>';
 
   // TODO: Keep indentation of BinaryOperators inside function call args
   $(document.body).append('<li>' +
-  myVar.toString() +
-  '</li>');
+    myVar.toString() +
+    '</li>');
 
   var myVar = new myVarTypes[
     'A type']();
@@ -106,7 +108,7 @@
 
   var nestedObjects = [{
     a: true
-    }, {
+  }, {
     a: false
   }];
 
