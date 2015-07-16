@@ -25,16 +25,16 @@
     }
   ],
   "dependencies": {
+    "deep-extend": "~0.3.2",
     "docopt": "~0.4.0",
     "escodegen": "~1.6.1",
     "esformatter": "~0.5.0",
     "esformatter-braces": "~1.0.0",
     "esformatter-var-each": "~1.0.0",
-    "esprima": "jquery/esprima#harmony",
+    "esprima": "~2.4.0",
     "falafel": "~0.3.1",
     "glob": "~4.4.0",
     "rc": "~0.6.0",
-    "deep-extend": "~0.3.2",
     "rocambole": "~0.5.0",
     "tmp": "~0.0.23",
     "underscore": "~1.8.0"
@@ -62,14 +62,15 @@
     "search"
   ],
   "devDependencies": {
-    "mocha": "~1.18.2",
-    "should": "~3.3.1",
+    "coveralls": "~2.8.0",
     "grunt": "~0.4.5",
     "grunt-contrib-jshint": "~0.10.0",
-    "grunt-mocha-test": "~0.11.0",
     "grunt-exec": "~0.4.5",
-    "mocha-lcov-reporter": "0.0.1",
+    "grunt-mocha-test": "~0.11.0",
     "jscoverage": "~0.3.8",
-    "coveralls": "~2.8.0"
+    "json-stable-stringify": "^1.0.0",
+    "mocha": "~1.18.2",
+    "mocha-lcov-reporter": "0.0.1",
+    "should": "~3.3.1"
   }
 }
