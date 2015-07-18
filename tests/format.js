@@ -35,6 +35,12 @@ describe('jsfmt.format', function() {
       'try {\n  var foo = \'bar\';\n} catch (err) {\n  // ignore\n}'
     );
   });
+
+  it('should format es6 imports', function() {
+    var js = 'import     foo          from  "foo";';
+    var result = jsfmt.format(js, {});
+    result.should.eql('import foo from "foo";');
+  });
 });
 
 describe('jsfmt.formatJSON', function() {
