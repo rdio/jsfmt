@@ -88,8 +88,7 @@
     myVar.toString() +
     '</li>');
 
-  var myVar = new myVarTypes[
-    'A type']();
+  var myVar = new myVarTypes['A type']();
 
   callFunc(
     'An arg',
