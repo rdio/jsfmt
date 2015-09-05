@@ -31,7 +31,7 @@
     "esformatter": "~0.7.2",
     "esformatter-braces": "~1.0.0",
     "esformatter-var-each": "~1.0.0",
-    "esprima": "~2.4.0",
+    "esprima": "~2.6.0",
     "falafel": "~0.3.1",
     "glob": "~4.4.0",
     "rc": "~0.6.0",
