@@ -62,4 +62,13 @@ describe('jsfmt.rewrite', function() {
   it('should rewrite AssignmentExpression', function() {
     jsfmt.rewrite('var test = 4;', 'var a = b -> a += b').toString().should.eql('test += 4;');
   });
+
+  it('should support rewriting of es6 code', function() {
+    var source = 'import "foo"; function foo(foo, bar) {}';
+    var replacement = 'function foo(a, b) {} -> function foo(b, a) {}';
+
+    var rewritten = jsfmt.rewrite(source, replacement).toString();
+
+    rewritten.should.eql('import "foo"; function foo(bar, foo) {\n}');
+  });
 });

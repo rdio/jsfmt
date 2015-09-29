@@ -10,6 +10,10 @@ var jsfmt = require('../' + libPath + '/index');
 describe('jsfmt.search', function() {
   it('should test basic searching', function() {
     var results = jsfmt.search('var param1 = 1, done = function(){}; _.each(param1, done);', '_.each(a, b);');
+    results[0].node.loc.should.eql({
+      start: {line: 1, column: 37},
+      end: {line: 1, column: 57}
+    });
     results[0].wildcards.a.name.should.eql('param1');
     results[0].wildcards.b.name.should.eql('done');
   });
@@ -44,14 +48,15 @@ describe('jsfmt.search', function() {
       .toString().should.eql("templates['my_key'](argA, argB)");
   });
 
-  it('should support wildcard rest params in FunctionDeclaration', function() {
-    // Can transfer arguments
+  it('should support wildcard rest params in FunctionDeclaration (transfer)', function() {
     jsfmt.rewrite('function test(argA, argB, argC) {}', 'function test(...a) {} -> function test(...a) {}')
       .toString().should.eql("function test(argA, argB, argC) {\n}");
+  });
 
-    // Can drop argument
+  it('should support wildcard rest params in FunctionDeclaration (drop) ', function() {
     jsfmt.rewrite('function test(argA, argB, argC) {}', 'function test(a, b, ...c) {} -> function test(a, b) {}')
       .toString().should.eql("function test(argA, argB) {\n}");
+
   });
 
   it('should support wildcard rest params in FunctionExpression', function() {
