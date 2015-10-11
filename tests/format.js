@@ -61,4 +61,10 @@ describe('jsfmt.formatJSON', function() {
     var result = jsfmt.formatJSON(json, {});
     result.should.eql('[{\n  "hello": "world"\n}, {\n  "foo": 500.0\n}]');
   });
+
+  it('should correctly format with trailing new line', function() {
+    var json = '{"a":1,"b":"c"}\n';
+    var result = jsfmt.formatJSON(json, {});
+    result.should.eql('{\n  "a": 1,\n  "b": "c"\n}\n');
+  });
 });
