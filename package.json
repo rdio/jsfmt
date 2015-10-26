@@ -11,7 +11,8 @@
     "jsfmt": "./bin/jsfmt"
   },
   "scripts": {
-    "test": "grunt"
+    "test": "grunt && grunt fmt && grunt verify",
+    "fmt": "grunt fmt"
   },
   "files": [
     "bin",

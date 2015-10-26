@@ -20,7 +20,8 @@ module.exports = function(grunt) {
       jsfmtLib: './bin/jsfmt -w ./lib/**/*.js',
       jsfmtTests: './bin/jsfmt -w ./tests/**/*.js',
       jsfmtGrunt: './bin/jsfmt -w ./Gruntfile.js',
-      jsfmtStyleGuide: './bin/jsfmt -w ./examples/styleGuide.js',
+      jsfmtExamples: './bin/jsfmt -w ./examples/**/*.js',
+      verifyNoChanges: 'git --no-pager diff && test "$(git diff)" == ""',
     },
   });
 
@@ -28,5 +29,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-exec');
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.registerTask('default', ['jshint', 'mochaTest']);
-  grunt.registerTask('fmt', ['exec']);
+  grunt.registerTask('fmt', ['exec:jsfmtLib', 'exec:jsfmtTests', 'exec:jsfmtGrunt', 'exec:jsfmtExamples']);
+  grunt.registerTask('verify', ['exec:verifyNoChanges']);
 };
