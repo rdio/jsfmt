@@ -11,8 +11,14 @@ describe('jsfmt.search', function() {
   it('should test basic searching', function() {
     var results = jsfmt.search('var param1 = 1, done = function(){}; _.each(param1, done);', '_.each(a, b);');
     results[0].node.loc.should.eql({
-      start: {line: 1, column: 37},
-      end: {line: 1, column: 57}
+      start: {
+        line: 1,
+        column: 37
+      },
+      end: {
+        line: 1,
+        column: 57
+      }
     });
     results[0].wildcards.a.name.should.eql('param1');
     results[0].wildcards.b.name.should.eql('done');
