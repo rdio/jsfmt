@@ -105,11 +105,24 @@
     return;
   }
 
-  var nestedObjects = [{
+  var arrayOfObjects = [{
     a: true
   }, {
     a: false
   }];
+
+  var nestedObjects = {
+    one: {
+      fish: {
+        two: 'fish'
+      }
+    },
+    red: {
+      fish: {
+        blue: 'fish'
+      }
+    }
+  };
 
 }).call(this);
 
