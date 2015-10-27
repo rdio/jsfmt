@@ -21,7 +21,7 @@ module.exports = function(grunt) {
       jsfmtTests: './bin/jsfmt -w ./tests/**/*.js',
       jsfmtGrunt: './bin/jsfmt -w ./Gruntfile.js',
       jsfmtExamples: './bin/jsfmt -w ./examples/**/*.js',
-      verifyNoChanges: 'git --no-pager diff && test "$(git diff)" == ""',
+      verifyNoChanges: 'bash -c "git --no-pager diff && test \"\$(git diff)\" == \"\""',
     },
   });
 
