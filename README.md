@@ -188,6 +188,15 @@ for (var i = 0; i < errors.length; i++) {
 }
 ```
 
+Plugins
+-------
+
+Since `jsfmt` uses `esformatter` under the covers for formatting your code you can utilize any `esformatter` plugins with `jsfmt`. Please see https://github.com/millermedeiros/esformatter/#plugins for more information.
+
+### JSX
+
+There exists a plugin [esformatter-jsx](https://github.com/royriojas/esformatter-jsx) which provides support for formatting JSX with `esformatter`. Please see https://github.com/royriojas/esformatter-jsx/wiki/Usage-with-jsfmt for more information on setting up with `jsfmt`.
+
 Links
 ---
 
