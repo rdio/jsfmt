@@ -64,6 +64,9 @@ A `.jsfmtrc` will be read if it exists in any of the following directories:
 `jsfmt` will also attempt to pickup and use the configured `indent`
 variable from your `.jshintrc` configuration file, if present.
 
+#### disablePlugins
+By default `jsfmt` uses [esformatter-braces](https://github.com/pgilad/esformatter-braces) and [esformatter-var-each](https://github.com/twolfson/esformatter-var-each) plugins. However, if you would like to disable any of these, you can supply the config setting of `"disablePlugins": ["esformatter-var-each"]`.
+
 Rewriting
 ---
 
@@ -195,7 +198,7 @@ Links
 - Atom Package - https://atom.io/packages/atom-jsfmt - "Automatically run jsfmt every time you save a JavaScript source file."
 - Grunt Task - https://github.com/james2doyle/grunt-jsfmt - "A task for the jsfmt library."
 - Emacs Plugin - https://github.com/brettlangdon/jsfmt.el - "Run jsfmt from within emacs"
-- Gulp Task - https://github.com/blai/gulp-jsfmt - "A gulp task for jsfmt."  
+- Gulp Task - https://github.com/blai/gulp-jsfmt - "A gulp task for jsfmt."
 - Sublime Text plugin - https://github.com/ionutvmi/sublime-jsfmt - "On-demand and automatic jsfmt from Sublime Text 2 and 3"
 
 Changelog
