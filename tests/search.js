@@ -33,9 +33,9 @@ describe('jsfmt.search', function() {
   it('should be able to match variable declaration', function() {
     var results = jsfmt.search('var myA = 1; var myB = 2;', 'var a = b; var c = d;');
     results[0].wildcards.a.name.should.eql('myA');
-    results[0].wildcards.b.value.should.eql('1');
+    results[0].wildcards.b.value.should.eql(1);
     results[0].wildcards.c.name.should.eql('myB');
-    results[0].wildcards.d.value.should.eql('2');
+    results[0].wildcards.d.value.should.eql(2);
   });
 
   it('should be able to perform a basic search inside a block', function() {

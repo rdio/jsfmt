@@ -25,17 +25,17 @@
     }
   ],
   "dependencies": {
-    "deep-extend": "~0.3.2",
-    "docopt": "~0.4.0",
-    "escodegen": "~1.6.1",
+    "deep-extend": "~0.4.0",
+    "docopt": "~0.4.1",
+    "escodegen": "~1.7.0",
     "esformatter": "~0.7.2",
-    "esformatter-braces": "~1.0.0",
-    "esformatter-var-each": "~1.0.0",
+    "esformatter-braces": "~1.2.1",
+    "esformatter-var-each": "~2.1.0",
     "esprima": "~2.7.0",
     "falafel": "~1.2.0",
-    "glob": "~4.4.0",
-    "rc": "~0.6.0",
-    "rocambole": "~0.5.0",
+    "glob": "~5.0.15",
+    "rc": "~1.1.2",
+    "rocambole": "~0.7.0",
     "tmp": "~0.0.23",
     "underscore": "~1.8.0"
   },
@@ -62,16 +62,16 @@
     "search"
   ],
   "devDependencies": {
-    "coveralls": "~2.8.0",
+    "coveralls": "~2.11.4",
     "grunt": "~0.4.5",
     "grunt-cli": "~0.1.13",
-    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-jshint": "~0.11.3",
     "grunt-exec": "~0.4.5",
-    "grunt-mocha-test": "~0.11.0",
-    "jscoverage": "~0.3.8",
-    "json-stable-stringify": "^1.0.0",
-    "mocha": "~1.18.2",
-    "mocha-lcov-reporter": "0.0.1",
-    "should": "~3.3.1"
+    "grunt-mocha-test": "~0.12.7",
+    "jscoverage": "~0.6.0",
+    "json-stable-stringify": "~1.0.0",
+    "mocha": "~2.3.3",
+    "mocha-lcov-reporter": "1.0.0",
+    "should": "~7.1.1"
   }
 }
