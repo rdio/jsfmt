@@ -1,3 +1,6 @@
+# Use new container based infrastructure
+# http://docs.travis-ci.com/user/migrating-from-legacy/
+sudo: false
 language: node_js
 node_js:
   - 'stable'
