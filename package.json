@@ -26,7 +26,7 @@
   ],
   "dependencies": {
     "deep-extend": "~0.4.0",
-    "docopt": "~0.6.2",
+    "docopt": "~0.4.1",
     "escodegen": "~1.7.0",
     "esformatter": "~0.7.2",
     "esformatter-braces": "~1.2.1",
