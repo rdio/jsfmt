@@ -29,7 +29,7 @@
     "deep-extend": "~0.4.0",
     "docopt": "~0.4.1",
     "escodegen": "~1.7.0",
-    "esformatter": "~0.7.2",
+    "esformatter": "~0.8.1",
     "esformatter-braces": "~1.2.1",
     "esformatter-var-each": "~2.1.0",
     "esprima": "~2.7.0",
