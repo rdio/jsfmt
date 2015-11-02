@@ -1,0 +1,86 @@
+{
+  "body": [
+    {
+      "range": [
+        0,
+        22
+      ],
+      "source": {
+        "range": [
+          16,
+          21
+        ],
+        "raw": "\"foo\"",
+        "type": "Literal",
+        "value": "foo"
+      },
+      "specifiers": [
+        {
+          "local": {
+            "name": "foo",
+            "range": [
+              7,
+              10
+            ],
+            "type": "Identifier"
+          },
+          "range": [
+            7,
+            10
+          ],
+          "type": "ImportDefaultSpecifier"
+        }
+      ],
+      "type": "ImportDeclaration"
+    }
+  ],
+  "comments": [],
+  "range": [
+    0,
+    22
+  ],
+  "sourceType": "module",
+  "tokens": [
+    {
+      "range": [
+        0,
+        6
+      ],
+      "type": "Keyword",
+      "value": "import"
+    },
+    {
+      "range": [
+        7,
+        10
+      ],
+      "type": "Identifier",
+      "value": "foo"
+    },
+    {
+      "range": [
+        11,
+        15
+      ],
+      "type": "Identifier",
+      "value": "from"
+    },
+    {
+      "range": [
+        16,
+        21
+      ],
+      "type": "String",
+      "value": "\"foo\""
+    },
+    {
+      "range": [
+        21,
+        22
+      ],
+      "type": "Punctuator",
+      "value": ";"
+    }
+  ],
+  "type": "Program"
+}

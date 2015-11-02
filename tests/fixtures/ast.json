@@ -1,0 +1,161 @@
+{
+  "tokens": [
+    {
+      "range": [
+        0,
+        3
+      ],
+      "value": "var",
+      "type": "Keyword"
+    },
+    {
+      "range": [
+        4,
+        5
+      ],
+      "value": "a",
+      "type": "Identifier"
+    },
+    {
+      "range": [
+        6,
+        7
+      ],
+      "value": "=",
+      "type": "Punctuator"
+    },
+    {
+      "range": [
+        8,
+        10
+      ],
+      "value": "50",
+      "type": "Numeric"
+    },
+    {
+      "range": [
+        10,
+        11
+      ],
+      "value": ";",
+      "type": "Punctuator"
+    },
+    {
+      "range": [
+        12,
+        15
+      ],
+      "value": "var",
+      "type": "Keyword"
+    },
+    {
+      "range": [
+        16,
+        17
+      ],
+      "value": "b",
+      "type": "Identifier"
+    },
+    {
+      "range": [
+        18,
+        19
+      ],
+      "value": "=",
+      "type": "Punctuator"
+    },
+    {
+      "range": [
+        20,
+        23
+      ],
+      "value": "100",
+      "type": "Numeric"
+    },
+    {
+      "range": [
+        23,
+        24
+      ],
+      "value": ";",
+      "type": "Punctuator"
+    }
+  ],
+  "comments": [],
+  "range": [
+    0,
+    24
+  ],
+  "body": [
+    {
+      "range": [
+        0,
+        11
+      ],
+      "kind": "var",
+      "declarations": [
+        {
+          "range": [
+            4,
+            10
+          ],
+          "init": {
+            "range": [
+              8,
+              10
+            ],
+            "raw": "50",
+            "value": 50,
+            "type": "Literal"
+          },
+          "id": {
+            "range": [
+              4,
+              5
+            ],
+            "name": "a",
+            "type": "Identifier"
+          },
+          "type": "VariableDeclarator"
+        }
+      ],
+      "type": "VariableDeclaration"
+    },
+    {
+      "range": [
+        12,
+        24
+      ],
+      "kind": "var",
+      "declarations": [
+        {
+          "range": [
+            16,
+            23
+          ],
+          "init": {
+            "range": [
+              20,
+              23
+            ],
+            "raw": "100",
+            "value": 100,
+            "type": "Literal"
+          },
+          "id": {
+            "range": [
+              16,
+              17
+            ],
+            "name": "b",
+            "type": "Identifier"
+          },
+          "type": "VariableDeclarator"
+        }
+      ],
+      "type": "VariableDeclaration"
+    }
+  ],
+  "sourceType": "module",
+  "type": "Program"
+}
