@@ -5,7 +5,7 @@ module.exports = function(grunt) {
         src: ['lib/**/*.js'],
       },
       tests: {
-        src: ['tests/**/*.js'],
+        src: ['tests/*.js', 'tests/utils/*.js'],
       },
     },
     mochaTest: {
@@ -13,13 +13,13 @@ module.exports = function(grunt) {
         options: {
           reporter: 'spec',
         },
-        src: ['tests/**/*.js'],
+        src: ['tests/*.js'],
       },
     },
     exec: {
       // Tasks to run `jsfmt`
       jsfmtLib: './bin/jsfmt -w ./lib/**/*.js',
-      jsfmtTests: './bin/jsfmt -w ./tests/**/*.js',
+      jsfmtTests: './bin/jsfmt -w ./tests/*.js ./tests/utils/*.js',
       jsfmtGrunt: './bin/jsfmt -w ./Gruntfile.js',
       jsfmtExamples: './bin/jsfmt -w ./examples/**/*.js',
 
