@@ -3,68 +3,69 @@
 'use strict';
 var should = require('should');
 var fs = require('fs');
+var utils = require('./utils');
 
 var libPath = process.env.JSFMT_COV ? 'lib-cov' : 'lib';
 var jsfmt = require('../' + libPath + '/index');
 
 describe('jsfmt.format', function() {
   it('should test basic formatting', function() {
-    var js = 'var func = function(test){console.log( test );};';
+    var js = utils.loadFixture('function.js');
     var result = jsfmt.format(js, {});
-    result.should.eql('var func = function(test) {\n  console.log(test);\n};');
+    result.should.eql('var func = function(test) {\n  console.log(test);\n};\n');
   });
 
   it('should test shebangs', function() {
-    var js = '#!/usr/bin/env node\nvar func = function(test){console.log( test );};';
+    var js = utils.loadFixture('shebang.js');
     var result = jsfmt.format(js, {});
-    result.should.eql('#!/usr/bin/env node\nvar func = function(test) {\n  console.log(test);\n};');
+    result.should.eql('#!/usr/bin/env node\nvar func = function(test) {\n  console.log(test);\n};\n');
   });
 
   it('should convert a list of var declarations to individual declarations', function() {
-    var js = 'var a,\n  b = 2,\n  c = 3;';
+    var js = utils.loadFixture('var-list.js');
     var result = jsfmt.format(js, {
       plugins: ['esformatter-var-each']
     });
-    result.should.eql('var a;\nvar b = 2;\nvar c = 3;');
+    result.should.eql('var a;\nvar b = 2;\nvar c = 3;\n');
   });
 
   it('should try/catch blocks properly', function() {
-    var js = 'try {\nvar foo = \'bar\';\n} catch (err) {\n// ignore\n}';
+    var js = utils.loadFixture('try-catch.js');
     var result = jsfmt.format(js, {});
     result.should.eql(
-      'try {\n  var foo = \'bar\';\n} catch (err) {\n  // ignore\n}'
+      'try {\n  var foo = \'bar\';\n} catch (err) {\n  console.log(err);\n}\n'
     );
   });
 
   it('should format es6 imports', function() {
-    var js = 'import     foo          from  "foo";';
+    var js = utils.loadFixture('es6-import.js');
     var result = jsfmt.format(js, {});
-    result.should.eql('import foo from "foo";');
+    result.should.eql('import foo from "foo";\n');
   });
 });
 
 describe('jsfmt.formatJSON', function() {
   it('should test formatting json object', function() {
-    var json = '{"hello":"world"}';
+    var json = utils.loadFixture('basic.json');
     var result = jsfmt.formatJSON(json, {});
-    result.should.eql('{\n  "hello": "world"\n}');
+    result.should.eql('{\n  "hello": "world"\n}\n');
   });
 
   it('should test formatting json array', function() {
-    var json = '["hello","world"]';
+    var json = utils.loadFixture('array.json');
     var result = jsfmt.formatJSON(json, {});
-    result.should.eql('["hello", "world"]');
+    result.should.eql('["hello", "world"]\n');
   });
 
   it('should test formatting json array of objects', function() {
-    var json = '[{"hello":"world"},{"foo":500.0}]';
+    var json = utils.loadFixture('object-array.json');
     var result = jsfmt.formatJSON(json, {});
-    result.should.eql('[{\n  "hello": "world"\n}, {\n  "foo": 500.0\n}]');
+    result.should.eql('[{\n  "hello": "world"\n}, {\n  "foo": 500.0\n}]\n');
   });
 
-  it('should correctly format with trailing new line', function() {
-    var json = '{"a":1,"b":"c"}\n';
+  it('should correctly format without trailing new line', function() {
+    var json = '{"a":1,"b":"c"}';
     var result = jsfmt.formatJSON(json, {});
-    result.should.eql('{\n  "a": 1,\n  "b": "c"\n}\n');
+    result.should.eql('{\n  "a": 1,\n  "b": "c"\n}');
   });
 });
