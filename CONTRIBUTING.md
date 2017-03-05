@@ -17,7 +17,7 @@ BUGS
 
 - Check if the issue has already been filed here: [jsfmt issues](https://github.com/rdio/jsfmt/issues/)
 - If an issue already exists let us know if you're also experiencing the same issue and any additional details you can provide.
-- If its a new issue, please file a new issue with as much detail as possible including steps to reproduce the problem.
+- If it's a new issue, please file a new issue with as much detail as possible including steps to reproduce the problem.
 
 
 CONTRIBUTING CHANGES

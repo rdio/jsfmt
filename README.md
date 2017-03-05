@@ -75,7 +75,7 @@ Both `pattern` and `replacement` must be valid JavaScript. In `pattern`, single-
 
 ### Example
 
-Rewrite occurences of `_.reduce` to use native reduce:
+Rewrite occurrences of `_.reduce` to use native reduce:
 
     jsfmt --rewrite "_.reduce(a, b, c) -> a.reduce(b, c)" reduce.js
 
@@ -86,7 +86,7 @@ The `--search` flag allows searching through a JavaScript's AST. The search rule
 
 ### Example
 
-Find occurences of `_.reduce`:
+Find occurrences of `_.reduce`:
 
     jsfmt --search "_.reduce(a, b, c)" reduce.js
 
